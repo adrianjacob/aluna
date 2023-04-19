@@ -44,13 +44,6 @@ const Layout: React.FC<Props> = ({ title, children }) => (
         cursor: pointer;
       }
     `}</style>
-    <style jsx>{`
-       {
-        /* .layout {
-        padding: 0 2rem;
-      } */
-      }
-    `}</style>
   </div>
 );
 
