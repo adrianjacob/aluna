@@ -12,10 +12,14 @@ interface FieldFlexProps {
   children: React.ReactNode;
 }
 
-const Field: React.FC<FieldProps> & { Flex: React.FC<FieldFlexProps> } = ({
-  children,
-  help,
-}) => {
+interface FieldOptionsProps {
+  children: React.ReactNode;
+}
+
+const Field: React.FC<FieldProps> & {
+  Flex: React.FC<FieldFlexProps>;
+  Options: React.FC<FieldOptionsProps>;
+} = ({ children, help }) => {
   return (
     <div className={cx("field")}>
       {children}
@@ -28,6 +32,11 @@ const FieldFlex: React.FC<FieldFlexProps> = ({ children }) => {
   return <div className={cx("flex")}>{children}</div>;
 };
 
+const FieldOptions: React.FC<FieldOptionsProps> = ({ children }) => {
+  return <div className={cx("overflow", "flex")}>{children}</div>;
+};
+
 Field.Flex = FieldFlex;
+Field.Options = FieldOptions;
 
 export default Field;

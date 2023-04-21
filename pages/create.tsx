@@ -6,6 +6,7 @@ import Panel from "../components/Panel";
 import Input from "../components/Input";
 import Field from "../components/Field";
 import Label from "../components/Label";
+import Option from "../components/Option";
 import Button from "../components/Button";
 import Router from "next/router";
 import { useSession } from "next-auth/react";
@@ -18,18 +19,30 @@ const Draft: React.FC = () => {
   const [email, setEmail] = useState("");
   const [frameWidth, setFrameWidth] = useState(2500);
   const [frameHeight, setFrameHeight] = useState(2200);
-  const [threshold, setThreshold] = useState("Standard");
-  const [cill, setCill] = useState("Standard");
+  const [threshold, setThreshold] = useState("Standard (55mm)");
+  const [cill, setCill] = useState("Standard (150mm)");
   const [cillCost, setCillCost] = useState(1800);
   const [leftDoors, setLeftDoors] = useState(0);
   const [rightDoors, setRightDoors] = useState(0);
+  const [openingDirection, setOpeningDirection] = useState("Out");
+  const [trafficDoorSide, setTrafficDoorSIde] = useState("Left");
+  const [frameColor, setFrameColor] = useState("White (RAL 9016 Gloss)");
+  const [frameColorCost, setFrameColorCost] = useState(0);
+  const [addOnSize, setAddOnSize] = useState("None");
+  const [addOnSizeCost, setAddOnSizeCost] = useState(0);
+  const [addOnPosition, setAddOnPosition] = useState("Top");
+  const [handleColor, setHandleColor] = useState("White");
+  const [handleColorCost, setHandleColorCost] = useState(0);
+  const [internalShootbolt, setInternalShootbolt] = useState(
+    "Standard to match door colour"
+  );
+  const [internalShootboltCost, setInternalShootboltCost] = useState(0);
   const [content, setContent] = useState("");
 
   const frameWidthRef = useRef<HTMLInputElement>(null);
   const frameHeightRef = useRef<HTMLInputElement>(null);
   const leftDoorsRef = useRef<HTMLInputElement>(null);
   const rightDoorsRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
 
   const leaf = {
     min: 550,
@@ -40,7 +53,6 @@ const Draft: React.FC = () => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log("SUBMIT");
     try {
       const body = {
         reference,
@@ -53,6 +65,13 @@ const Draft: React.FC = () => {
         cill,
         leftDoors,
         rightDoors,
+        openingDirection,
+        trafficDoorSide,
+        frameColor,
+        addOnSize,
+        addOnPosition,
+        handleColor,
+        internalShootbolt,
         content,
       };
       await fetch("/api/post", {
@@ -71,9 +90,43 @@ const Draft: React.FC = () => {
     setCillCost(cost);
   };
 
+  const handleFrameColor = (option: string, cost: number) => {
+    setFrameColor(option);
+    setFrameColorCost(cost);
+  };
+
+  const handleAddOnSize = (option: string, cost: number) => {
+    setAddOnSize(option);
+    setAddOnSizeCost(cost);
+  };
+
+  const handleHandleColour = (option: string, cost: number) => {
+    setHandleColor(option);
+    setHandleColorCost(cost);
+  };
+
+  const handleInternalShootbolt = (option: string, cost: number) => {
+    setInternalShootbolt(option);
+    setInternalShootboltCost(cost);
+  };
+
   // SET TOTAL
   useEffect(() => {
-    setTotal((frameWidth / 1000) * (cillCost / 100));
+    const sumCill = (frameWidth / 1000) * (cillCost / 100);
+    const doorsPerLeaf = frameHeight <= 2250 ? 395 : 425;
+    const sumDoors = doorsPerLeaf * (leftDoors + rightDoors);
+    const sumFrameColor = (frameColorCost / 100) * (leftDoors + rightDoors);
+    const sumAddOnSize = (frameWidth / 1000) * (addOnSizeCost / 100);
+    const sumHandleColour = handleColorCost / 100;
+    const sumInternalShootbolt = internalShootboltCost / 100;
+    setTotal(
+      sumCill +
+        sumDoors +
+        sumFrameColor +
+        sumAddOnSize +
+        sumHandleColour +
+        sumInternalShootbolt
+    );
   });
 
   // SET DEFAULT LEFT DOORS
@@ -88,7 +141,7 @@ const Draft: React.FC = () => {
           <p>Please log in to view posts</p>
         ) : (
           <>
-            <form onSubmit={submitData} ref={formRef}>
+            <form onSubmit={submitData}>
               <Field>
                 <Label>reference*</Label>
                 <Input
@@ -208,93 +261,69 @@ const Draft: React.FC = () => {
               </Field>
               <Field>
                 <Label>Threshold*</Label>
-                <Field.Flex>
-                  <button
-                    type="button"
-                    className={[
-                      threshold === "Standard" && "highlight",
-                      "multiple",
-                    ].join(" ")}
-                    onClick={() => setThreshold("Standard")}
+                <Field.Options>
+                  <Option
+                    isActive={threshold === "Standard (55mm)"}
+                    onClick={() => setThreshold("Standard (55mm)")}
                   >
-                    Standard (55mm)
-                  </button>
-                  <button
-                    type="button"
-                    className={[
-                      threshold === "Low" && "highlight",
-                      "multiple",
-                    ].join(" ")}
-                    onClick={() => setThreshold("Low")}
+                    Standard
+                    <br />
+                    (55mm)
+                  </Option>
+                  <Option
+                    isActive={threshold === "Low (20mm)"}
+                    onClick={() => setThreshold("Low (20mm)")}
                   >
-                    Low (20mm)
-                  </button>
-                  <button
-                    type="button"
-                    className={[
-                      threshold === "Low w/rebate" && "highlight",
-                      "multiple",
-                    ].join(" ")}
-                    onClick={() => setThreshold("Low w/rebate")}
+                    Low
+                    <br />
+                    (20mm)
+                  </Option>
+                  <Option
+                    isActive={threshold === "Low w/rebate (40mm)"}
+                    onClick={() => setThreshold("Low w/rebate (40mm)")}
                   >
-                    Low w/rebate (40mm)
-                  </button>
-                </Field.Flex>
+                    Low w/rebate
+                    <br />
+                    (40mm)
+                  </Option>
+                </Field.Options>
               </Field>
               <Field>
                 <Label>Cill*</Label>
-                <Field.Flex>
-                  <button
-                    type="button"
-                    className={[
-                      cill === "Standard" && "highlight",
-                      "multiple",
-                    ].join(" ")}
-                    onClick={() => handleCillSelect("Standard", 1800)}
+                <Field.Options>
+                  <Option
+                    isActive={cill === "Standard (150mm)"}
+                    onClick={() => handleCillSelect("Standard (150mm)", 1800)}
                   >
-                    Standard (150mm)
-                  </button>
-                  <button
-                    type="button"
-                    className={[
-                      cill === "None" && "highlight",
-                      "multiple",
-                    ].join(" ")}
+                    Standard
+                    <br />
+                    (150mm)
+                  </Option>
+                  <Option
+                    isActive={cill === "None"}
                     onClick={() => handleCillSelect("None", 0)}
                   >
                     None
-                  </button>
-                  <button
-                    type="button"
-                    className={[
-                      cill === "90mm" && "highlight",
-                      "multiple",
-                    ].join(" ")}
+                  </Option>
+                  <Option
+                    isActive={cill === "90mm"}
                     onClick={() => handleCillSelect("90mm", 1650)}
                   >
                     90mm
-                  </button>
-                  <button
-                    type="button"
-                    className={[
-                      cill === "190mm" && "highlight",
-                      "multiple",
-                    ].join(" ")}
+                  </Option>
+                  <Option
+                    isActive={cill === "190mm"}
                     onClick={() => handleCillSelect("190mm", 2100)}
                   >
                     190mm
-                  </button>
-                  <button
-                    type="button"
-                    className={[
-                      cill === "230mm" && "highlight",
-                      "multiple",
-                    ].join(" ")}
+                  </Option>
+                  <Option
+                    isActive={cill === "230mm"}
                     onClick={() => handleCillSelect("230mm", 2500)}
                   >
                     230mm
-                  </button>
-                </Field.Flex>
+                  </Option>
+                </Field.Options>
               </Field>
               <Field
                 help={`Viewed from outside. Total min = ${Math.floor(
@@ -333,7 +362,9 @@ const Draft: React.FC = () => {
                       e.target.setCustomValidity(
                         `Please enter a total doors value between ${Math.floor(
                           frameWidth / leaf.max
-                        )} and ${Math.floor(frameWidth / leaf.min)}.`
+                        )} and ${Math.floor(
+                          frameWidth / leaf.min
+                        )}. Current total = ${+leftDoors + +rightDoors}`
                       )
                     }
                     onChange={(e) => {
@@ -341,12 +372,6 @@ const Draft: React.FC = () => {
                       setLeftDoors(e.target.value);
                     }}
                     className="square"
-                    // isError={
-                    //   +leftDoors + +rightDoors >
-                    //     Math.floor(frameWidth / leaf.min) ||
-                    //   +leftDoors + +rightDoors <
-                    //     Math.floor(frameWidth / leaf.max)
-                    // }
                   />
                   <Button
                     type="button"
@@ -400,7 +425,9 @@ const Draft: React.FC = () => {
                       e.target.setCustomValidity(
                         `Please enter a total doors value between ${Math.floor(
                           frameWidth / leaf.max
-                        )} and ${Math.floor(frameWidth / leaf.min)}.`
+                        )} and ${Math.floor(
+                          frameWidth / leaf.min
+                        )}. Current total = ${+leftDoors + +rightDoors}`
                       )
                     }
                     onChange={(e) => {
@@ -408,12 +435,6 @@ const Draft: React.FC = () => {
                       setRightDoors(e.target.value);
                     }}
                     className="square"
-                    // isError={
-                    //   +leftDoors + +rightDoors >
-                    //     Math.floor(frameWidth / leaf.min) ||
-                    //   +leftDoors + +rightDoors <
-                    //     Math.floor(frameWidth / leaf.max)
-                    // }
                   />
                   <Button
                     type="button"
@@ -427,6 +448,277 @@ const Draft: React.FC = () => {
                     +
                   </Button>
                 </Field.Flex>
+              </Field>
+
+              <Field help="Viewed from outside">
+                <Label>Opening direction*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={openingDirection === "Out"}
+                    onClick={() => setOpeningDirection("Out")}
+                  >
+                    Out
+                  </Option>
+                  <Option
+                    isActive={openingDirection === "In"}
+                    onClick={() => setOpeningDirection("In")}
+                  >
+                    In
+                  </Option>
+                </Field.Options>
+              </Field>
+
+              <Field help="Viewed from outside">
+                <Label>Master / traffic door side*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={trafficDoorSide === "Left"}
+                    onClick={() => setTrafficDoorSIde("Left")}
+                  >
+                    Left
+                  </Option>
+                  <Option
+                    isActive={trafficDoorSide === "Right"}
+                    onClick={() => setTrafficDoorSIde("Right")}
+                  >
+                    Right
+                  </Option>
+                  <Option
+                    isActive={trafficDoorSide === "N/A"}
+                    onClick={() => setTrafficDoorSIde("N/A")}
+                  >
+                    N/A
+                  </Option>
+                </Field.Options>
+              </Field>
+
+              <Field>
+                <Label>Frame colour*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={frameColor === "White (RAL 9016 Gloss)"}
+                    onClick={() =>
+                      handleFrameColor("White (RAL 9016 Gloss)", 0)
+                    }
+                  >
+                    White
+                    <br />
+                    (RAL 9016 Gloss)
+                  </Option>
+                  <Option
+                    isActive={frameColor === "Black (RAL 9005 Matt)"}
+                    onClick={() => handleFrameColor("Black (RAL 9005 Matt)", 0)}
+                  >
+                    Black
+                    <br />
+                    (RAL 9005 Matt)
+                  </Option>
+                  <Option
+                    isActive={frameColor === "Anthracite (RAL 7016 Matt)"}
+                    onClick={() =>
+                      handleFrameColor("Anthracite (RAL 7016 Matt)", 0)
+                    }
+                  >
+                    Anthracite
+                    <br />
+                    (RAL 7016 Matt)
+                  </Option>
+                  <Option
+                    isActive={
+                      frameColor ===
+                      "White internal (RAL 9016 Gloss) / Anthracite external (RAL 7016 Matt)"
+                    }
+                    onClick={() =>
+                      handleFrameColor(
+                        "White internal (RAL 9016 Gloss) / Anthracite external (RAL 7016 Matt)",
+                        0
+                      )
+                    }
+                  >
+                    White internal
+                    <br />
+                    (RAL 9016 Gloss) / Anthracite external (RAL 7016 Matt)
+                  </Option>
+                  <Option
+                    isActive={
+                      frameColor ===
+                      "White internal (RAL 9016 Gloss) / Black external (RAL 9005 Matt)"
+                    }
+                    onClick={() =>
+                      handleFrameColor(
+                        "White internal (RAL 9016 Gloss) / Black external (RAL 9005 Matt)",
+                        0
+                      )
+                    }
+                  >
+                    White internal
+                    <br />
+                    (RAL 9016 Gloss) / Black external (RAL 9005 Matt)
+                  </Option>
+                  <Option
+                    isActive={frameColor === "Single RAL Internal & External"}
+                    onClick={() =>
+                      handleFrameColor("Single RAL Internal & External", 17500)
+                    }
+                  >
+                    Single RAL Internal & External
+                  </Option>
+                  <Option
+                    isActive={frameColor === "Dual RAL Internal & External"}
+                    onClick={() =>
+                      handleFrameColor("Dual RAL Internal & External", 22500)
+                    }
+                  >
+                    Dual RAL Internal & External
+                  </Option>
+                </Field.Options>
+              </Field>
+
+              <Field help="Included in the overall size of the bifold">
+                <Label>Add-on size*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={addOnSize === "None"}
+                    onClick={() => handleAddOnSize("None", 0)}
+                  >
+                    None
+                  </Option>
+                  <Option
+                    isActive={addOnSize === "20mm add-on"}
+                    onClick={() => handleAddOnSize("20mm add-on", 1650)}
+                  >
+                    20mm add-on
+                  </Option>
+                  <Option
+                    isActive={addOnSize === "38mm add-on"}
+                    onClick={() => handleAddOnSize("38mm add-on", 1850)}
+                  >
+                    38mm add-on
+                  </Option>
+                </Field.Options>
+              </Field>
+
+              <Field help="Select all that apply">
+                <Label>Add-on position* [HAVE QUERIES]</Label>
+                <Field.Options>
+                  <Option
+                    isActive={addOnPosition === "Top"}
+                    onClick={() => setAddOnPosition("Top")}
+                  >
+                    Top
+                  </Option>
+                  <Option
+                    isActive={addOnPosition === "Right"}
+                    onClick={() => setAddOnPosition("Right")}
+                  >
+                    Right
+                  </Option>
+                  <Option
+                    isActive={addOnPosition === "Left"}
+                    onClick={() => setAddOnPosition("Left")}
+                  >
+                    Left
+                  </Option>
+                </Field.Options>
+              </Field>
+
+              <Field>
+                <Label>Handle colour*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={handleColor === "White"}
+                    onClick={() => handleHandleColour("White", 0)}
+                  >
+                    White
+                  </Option>
+                  <Option
+                    isActive={handleColor === "Black"}
+                    onClick={() => handleHandleColour("Black", 0)}
+                  >
+                    Black
+                  </Option>
+                  <Option
+                    isActive={handleColor === "Anthracite"}
+                    onClick={() => handleHandleColour("Anthracite", 0)}
+                  >
+                    Anthracite
+                  </Option>
+                  <Option
+                    isActive={handleColor === "Chrome"}
+                    onClick={() => handleHandleColour("Chrome", 1000)}
+                  >
+                    Chrome
+                  </Option>
+                  <Option
+                    isActive={handleColor === "Satin Brushed Aluminium"}
+                    onClick={() =>
+                      handleHandleColour("Satin Brushed Aluminium", 1000)
+                    }
+                  >
+                    Satin Brushed Aluminium
+                  </Option>
+                  {(frameColor === "White (RAL 9016 Gloss)" ||
+                    frameColor === "Black (RAL 9005 Matt)" ||
+                    frameColor === "Anthracite (RAL 7016 Matt)") && (
+                    <Option
+                      isActive={handleColor === "Dual-Colour to match"}
+                      onClick={() =>
+                        handleHandleColour("Dual-Colour to match", 2000)
+                      }
+                    >
+                      Dual-Colour to match
+                    </Option>
+                  )}
+                </Field.Options>
+              </Field>
+
+              <Field>
+                <Label>Internal shootbolt handle colour*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={
+                      internalShootbolt === "Standard to match door colour"
+                    }
+                    onClick={() =>
+                      handleInternalShootbolt(
+                        "Standard to match door colour",
+                        0
+                      )
+                    }
+                  >
+                    Standard to match door colour
+                  </Option>
+                  <Option
+                    isActive={internalShootbolt === "Black"}
+                    onClick={() => handleInternalShootbolt("Black", 0)}
+                  >
+                    Black
+                  </Option>
+                  {(frameColor === "Single RAL Internal & External" ||
+                    frameColor === "Dual RAL Internal & External") && (
+                    <>
+                      <Option
+                        isActive={internalShootbolt === "Chrome"}
+                        onClick={() => handleInternalShootbolt("Chrome", 1000)}
+                      >
+                        Chrome
+                      </Option>
+                      <Option
+                        isActive={
+                          internalShootbolt === "Satin Brushed Aluminium"
+                        }
+                        onClick={() =>
+                          handleInternalShootbolt(
+                            "Satin Brushed Aluminium",
+                            1000
+                          )
+                        }
+                      >
+                        Satin Brushed Aluminium
+                      </Option>
+                    </>
+                  )}
+                </Field.Options>
               </Field>
 
               <Field>
@@ -467,23 +759,6 @@ const Draft: React.FC = () => {
         }
         form {
           padding: 20px;
-        }
-
-        .page {
-          background: var(--geist-background);
-          padding: 3rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .flex {
-          display: flex;
-          margin: 0;
-        }
-
-        .highlight {
-          border: 2px solid #0bb4aa;
         }
       `}</style>
     </Layout>

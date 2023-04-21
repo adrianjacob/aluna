@@ -6,6 +6,13 @@
   display: flex;
 }
 
+.overflow {
+  margin: 0 -20px;
+  padding: 0 20px;
+  overflow: auto;
+  min-height: 39px;
+}
+
 .help {
   margin-top: 8px;
   font-size: 11px;

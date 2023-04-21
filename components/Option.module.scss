@@ -1,0 +1,22 @@
+.option {
+  flex: 1;
+  font: inherit;
+  border: 2px solid #d1d1d1;
+  font-size: 14px;
+  background: white;
+  padding: 8px;
+  min-width: 33.33%;
+  &:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  &:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+.active {
+  border: 2px solid #0bb4aa;
+  font-weight: 600;
+}

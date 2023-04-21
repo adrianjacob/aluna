@@ -7,7 +7,6 @@ const cx = classNames.bind(styles);
 type Props = {
   className?: string;
   isTextArea?: boolean;
-  isError?: boolean;
 };
 
 const Input = React.forwardRef<
@@ -17,7 +16,7 @@ const Input = React.forwardRef<
       | InputHTMLAttributes<HTMLInputElement>
       | TextareaHTMLAttributes<HTMLTextAreaElement>
     )
->(({ className, isTextArea = false, isError = false, ...rest }, ref) =>
+>(({ className, isTextArea = false, ...rest }, ref) =>
   isTextArea ? (
     <textarea
       cols={50}
@@ -28,7 +27,7 @@ const Input = React.forwardRef<
     />
   ) : (
     <input
-      className={cx("input", isError && "error", className)}
+      className={cx("input", className)}
       ref={ref as React.Ref<HTMLInputElement>}
       {...(rest as InputHTMLAttributes<HTMLInputElement>)}
     />
