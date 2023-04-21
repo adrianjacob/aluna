@@ -7,14 +7,19 @@ const cx = classNames.bind(styles);
 type Props = {
   type?: string;
   className?: string;
+  isTextArea?: boolean;
   [key: string]: any;
 };
 
 const Input = React.forwardRef<
   HTMLInputElement,
   Props & InputHTMLAttributes<HTMLInputElement>
->(({ isUppercase = false, className, ...rest }, ref) => (
-  <input className={cx("input", className)} ref={ref} {...rest} />
-));
+>(({ isUppercase = false, className, isTextArea = false, ...rest }, ref) =>
+  isTextArea ? (
+    <textarea className={cx("input")} cols={50} rows={8} {...rest} />
+  ) : (
+    <input className={cx("input", className)} ref={ref} {...rest} />
+  )
+);
 
 export default Input;

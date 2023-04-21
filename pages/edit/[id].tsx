@@ -27,7 +27,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const Post: React.FC<PostProps> = (props) => {
-  const [title, setTitle] = useState(props.reference);
+  // const [title, setTitle] = useState(props.reference);
+  const [reference, setReference] = useState(props.reference);
+
   const { data: session, status } = useSession();
   if (status === "loading") {
     return <div>Authenticating ...</div>;
@@ -43,7 +45,7 @@ const Post: React.FC<PostProps> = (props) => {
     await fetch(`/api/edit/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title }),
+      body: JSON.stringify({ reference }),
     });
     await Router.push("/");
   }
@@ -54,10 +56,9 @@ const Post: React.FC<PostProps> = (props) => {
         {/* <h2>{title}</h2> */}
         <input
           autoFocus
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
+          onChange={(e) => setReference(e.target.value)}
           type="text"
-          value={title}
+          value={reference}
         />
         {userHasValidSession && postBelongsToUser && (
           <button onClick={() => savePost(props.id)}>Save</button>

@@ -9,19 +9,21 @@ generator client {
 }
 
 model Quote {
-  id          String  @id @default(cuid())
-  reference   String
-  name        String
-  contact     String
-  email       String
-  frameWidth  String?
-  frameHeight String?
-  threshold   String?
-  cill        String?
-  content     String?
-  published   Boolean @default(false)
-  author      User?   @relation(fields: [authorId], references: [id])
-  authorId    String?
+  id            String  @id @default(cuid())
+  reference     String
+  name          String
+  contact       String
+  email         String
+  frameWidth    String?
+  frameHeight   String?
+  threshold     String?
+  cill          String?
+  content       String?
+  published     Boolean @default(false)
+  author        User?   @relation(fields: [authorId], references: [id])
+  authorId      String?
+  datePublished String // @default(now()) doesnt work for british time - using logic in code using date-fns-tz - also saving as string as issue with BST if using DateTime
+  dateModified  String // @updatedAt
 }
 
 model Account {
@@ -77,9 +79,9 @@ model VerificationToken {
 
 enum BrandEnum {
   All
-  Brand1
-  Brand2
-  Brand3
+  SGG
+  NOW
+  UDO
 }
 
 enum RoleEnum {

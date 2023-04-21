@@ -1,6 +1,7 @@
 
 import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
+ import { utcToZonedTime, format } from "date-fns-tz";
 
 // POST /api/post
 // Required fields in body: title
@@ -9,6 +10,13 @@ export default async function handle(req, res) {
   const { reference, name, contact, email, frameWidth, frameHeight, threshold, cill, content } = req.body;
 
   const session = await getSession({ req });
+
+  const currentDate = new Date();
+  const britishTimeZone = 'Europe/London';
+  const britishTime = utcToZonedTime(currentDate, britishTimeZone);
+  const britishTimeISO = format(britishTime, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", { timeZone: britishTimeZone });
+
+
   const result = await prisma.quote.create({
     data: {
       reference: reference,
@@ -21,6 +29,8 @@ export default async function handle(req, res) {
       cill: cill,
       content: content,
       author: { connect: { email: session?.user?.email } },
+      datePublished: britishTimeISO,
+      dateModified: britishTimeISO,
     },
   });
   res.json(result);

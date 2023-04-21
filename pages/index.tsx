@@ -10,12 +10,16 @@ import { useSession } from "next-auth/react";
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.quote.findMany({
     // where: { published: true },
+    orderBy: {
+      dateModified: "desc",
+    },
     include: {
       author: {
         select: { name: true },
       },
     },
   });
+
   return {
     props: { feed },
     revalidate: 10,

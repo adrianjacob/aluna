@@ -18,6 +18,8 @@ export type PostProps = {
   } | null;
   content: string;
   published: boolean;
+  datePublished: string;
+  dateModified: string;
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
@@ -31,6 +33,8 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       <div>Frame height: {post.frameHeight}</div>
       <div>Threshold: {post.threshold}</div>
       <div>Cill: {post.cill}</div>
+      <div>Published: {post.datePublished}</div>
+      <div>Modified: {post.dateModified}</div>
       {/* <ReactMarkdown children={post.content} /> */}
       <style jsx>{`
         div {

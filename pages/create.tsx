@@ -7,6 +7,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import Router from "next/router";
 import { useSession } from "next-auth/react";
+// import { utcToZonedTime, format } from "date-fns-tz";
 
 const Draft: React.FC = () => {
   const [reference, setReference] = useState("");
@@ -27,6 +28,14 @@ const Draft: React.FC = () => {
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
+      // const currentDate = new Date();
+      // const britishTimeZone = "Europe/London";
+      // const britishTime = utcToZonedTime(currentDate, britishTimeZone);
+      // const formattedBritishTime = format(
+      //   britishTime,
+      //   "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+      // );
+
       const body = {
         reference,
         name,
@@ -261,16 +270,14 @@ const Draft: React.FC = () => {
 
             <div>
               <label>Notes</label>
-              <textarea
-                cols={50}
+              <Input
                 onChange={(e) => setContent(e.target.value)}
-                rows={8}
                 value={content}
-                className="full"
+                isTextArea={true}
               />
             </div>
             <input
-              disabled={!content || !reference}
+              // disabled={!content || !reference}
               type="submit"
               value="Create"
             />
