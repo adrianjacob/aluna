@@ -14,6 +14,7 @@ const Panel: React.FC<Props> = ({ children }) => (
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
         position: relative;
+        padding-bottom: 100px;
       }
     `}</style>
   </>

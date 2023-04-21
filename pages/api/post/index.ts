@@ -7,7 +7,7 @@ import prisma from '../../../lib/prisma';
 // Required fields in body: title
 // Optional fields in body: content
 export default async function handle(req, res) {
-  const { reference, name, contact, email, frameWidth, frameHeight, threshold, cill, content } = req.body;
+  const { reference, name, contact, email, frameWidth, frameHeight, threshold, cill, leftDoors, rightDoors, content } = req.body;
 
   const session = await getSession({ req });
 
@@ -27,11 +27,14 @@ export default async function handle(req, res) {
       frameHeight: frameHeight.toString(),
       threshold: threshold,
       cill: cill,
+      leftDoors: leftDoors.toString(),
+      rightDoors: rightDoors.toString(),
       content: content,
       author: { connect: { email: session?.user?.email } },
       datePublished: britishTimeISO,
       dateModified: britishTimeISO,
     },
   });
+  console.log(result)
   res.json(result);
 }

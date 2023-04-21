@@ -40,6 +40,7 @@ const Draft: React.FC = () => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    console.log("SUBMIT");
     try {
       const body = {
         reference,
@@ -50,6 +51,8 @@ const Draft: React.FC = () => {
         frameHeight,
         threshold,
         cill,
+        leftDoors,
+        rightDoors,
         content,
       };
       await fetch("/api/post", {
@@ -124,7 +127,7 @@ const Draft: React.FC = () => {
                   required
                 />
               </Field>
-              <Field>
+              <Field help={`Min ${leaf.min}mm - Max ${leaf.max}mm sash width`}>
                 <Label>Overall Frame Width (MM)*</Label>
                 <Field.Flex>
                   <Button
@@ -147,6 +150,7 @@ const Draft: React.FC = () => {
                     required
                     ref={frameWidthRef}
                     className="square"
+                    min="0"
                   />
                   <Button
                     type="button"
@@ -161,7 +165,7 @@ const Draft: React.FC = () => {
                   </Button>
                 </Field.Flex>
               </Field>
-              <Field>
+              <Field help="Max 2500mm - higher sizes available upon request">
                 <Label>Overall Frame Height (MM)*</Label>
                 <Field.Flex>
                   <Button
@@ -184,11 +188,15 @@ const Draft: React.FC = () => {
                     required
                     ref={frameHeightRef}
                     className="square"
+                    min="0"
+                    max="2500"
                   />
                   <Button
                     type="button"
                     onClick={() => {
-                      setFrameHeight((frameHeight) => +frameHeight + 5);
+                      setFrameHeight((frameHeight) =>
+                        Math.min(+frameHeight + 5, 2500)
+                      );
                       frameHeightRef.current?.focus();
                     }}
                     tabIndex={-1}
@@ -429,34 +437,21 @@ const Draft: React.FC = () => {
                   isTextArea={true}
                 />
               </Field>
-            </form>
-            <div className="bar">
-              <button
-                value="Create"
-                type="submit"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (formRef.current.checkValidity()) {
-                    formRef.current.submit();
-                  } else {
-                    formRef.current.reportValidity();
-                  }
-                }}
-              >
-                Create
-              </button>
-              <a className="back" href="#" onClick={() => Router.push("/")}>
-                or Cancel
-              </a>
-              <div>
-                £
-                {total.toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}{" "}
-                (ex. VAT@20%)
+              <div className="bar">
+                <button type="submit">Create</button>
+                <a className="back" href="#" onClick={() => Router.push("/")}>
+                  or Cancel
+                </a>
+                <div>
+                  £
+                  {total.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{" "}
+                  (ex. VAT@20%)
+                </div>
               </div>
-            </div>
+            </form>
           </>
         )}
       </Panel>
@@ -464,6 +459,7 @@ const Draft: React.FC = () => {
         .bar {
           position: fixed;
           bottom: 0px;
+          left: 0px;
           background: #ededed;
           width: 100%;
           padding: 20px;

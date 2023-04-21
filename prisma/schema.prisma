@@ -18,6 +18,8 @@ model Quote {
   frameHeight   String?
   threshold     String?
   cill          String?
+  leftDoors     String?
+  rightDoors    String?
   content       String?
   published     Boolean @default(false)
   author        User?   @relation(fields: [authorId], references: [id])
