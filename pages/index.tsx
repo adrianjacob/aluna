@@ -1,7 +1,10 @@
 import React from "react";
+import Link from "next/link";
 import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
 import Panel from "../components/Panel";
+import Banner from "../components/Banner";
+import Button from "../components/Button";
 import Post, { PostProps } from "../components/Post";
 import prisma from "../lib/prisma";
 import { useSession } from "next-auth/react";
@@ -40,11 +43,20 @@ const Blog: React.FC<Props> = (props) => {
         {!session ? (
           <p>Please log in to view posts</p>
         ) : (
-          props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))
+          <>
+            {props.feed.map((post) => (
+              <div key={post.id} className="post">
+                <Post post={post} />
+              </div>
+            ))}
+            <Banner>
+              <Banner.Right>
+                <Link href="/create">
+                  <Button>New quote</Button>
+                </Link>
+              </Banner.Right>
+            </Banner>
+          </>
         )}
       </Panel>
 

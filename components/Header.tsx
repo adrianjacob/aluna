@@ -1,6 +1,7 @@
 // Header.tsx
 import React from "react";
 import Link from "next/link";
+import Button from "../components/Button";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 
@@ -13,11 +14,7 @@ const Header: React.FC = ({ title }) => {
 
   let left = (
     <div className="left">
-      <Link href="/">
-        <a className="bold" data-active={isActive("/")}>
-          Home
-        </a>
-      </Link>
+      <Link href="/">Home</Link>
       <style jsx>{`
         .bold {
           font-weight: bold;
@@ -136,24 +133,20 @@ const Header: React.FC = ({ title }) => {
     );
     right = (
       <div className="right">
+        <img src={session.user.image} width="20" height="20" />
         <p>
-          {session.user.name} ({session.user.email})
+          {session.user.name}
+          {/* ({session.user.email}) */}
         </p>
-        <Link href="/create">
+        {/* <Link href="/create">
           <button>
             <a>New quote</a>
           </button>
-        </Link>
-        <button onClick={() => signOut()}>
+        </Link> */}
+        <Button onClick={() => signOut()} variant="text">
           <a>Log out</a>
-        </button>
+        </Button>
         <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
           p {
             display: inline-block;
             font-size: 13px;
@@ -166,12 +159,6 @@ const Header: React.FC = ({ title }) => {
 
           .right {
             margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
           }
 
           button {

@@ -1,11 +1,33 @@
 .button {
-  background: red;
   font-weight: 600;
   min-width: 39px;
   border: 0px;
   background: #d1d1d1;
   border-radius: 5px;
   font-size: 16px;
+  text-transform: uppercase;
+  padding: 9px 15px;
+}
+
+.primary {
+  background: #0bb4aa;
+  border: 2px solid #0bb4aa;
+  color: white;
+}
+
+.secondary {
+  border: 2px solid #0bb4aa;
+  background: transparent;
+  color: #0bb4aa;
+}
+
+.tertiary {
+  background: #d1d1d1;
+}
+
+.text {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .decrement {

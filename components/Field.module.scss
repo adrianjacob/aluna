@@ -2,7 +2,8 @@
   margin: 20px 0;
 }
 
-.flex {
+.step {
+  width: 66.66%;
   display: flex;
 }
 
@@ -11,6 +12,7 @@
   padding: 0 20px;
   overflow: auto;
   min-height: 39px;
+  display: flex;
 }
 
 .help {

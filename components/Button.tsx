@@ -7,6 +7,7 @@ const cx = classNames.bind(styles);
 interface Props {
   onClick?: () => void;
   href?: string;
+  variant?: string;
   className?: string;
   [key: string]: any;
 }
@@ -15,6 +16,7 @@ const Button: React.FC<Props> = ({
   onClick,
   href,
   children,
+  variant = "primary",
   className,
   ...rest
 }) => {
@@ -24,7 +26,7 @@ const Button: React.FC<Props> = ({
   return (
     <Element
       href={href}
-      className={cx("button", className)}
+      className={cx("button", variant, className)}
       onClick={onClick}
       {...rest}
     >

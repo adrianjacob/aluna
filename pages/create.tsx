@@ -1,6 +1,5 @@
-// pages/create.tsx
-
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import Layout from "../components/Layout";
 import Panel from "../components/Panel";
 import Input from "../components/Input";
@@ -8,6 +7,7 @@ import Field from "../components/Field";
 import Label from "../components/Label";
 import Option from "../components/Option";
 import Button from "../components/Button";
+import Banner from "../components/Banner";
 import Router from "next/router";
 import { useSession } from "next-auth/react";
 
@@ -191,6 +191,7 @@ const Draft: React.FC = () => {
                     }}
                     tabIndex={-1}
                     className="decrement"
+                    variant="tertiary"
                   >
                     -
                   </Button>
@@ -213,6 +214,7 @@ const Draft: React.FC = () => {
                     }}
                     tabIndex={-1}
                     className="increment"
+                    variant="tertiary"
                   >
                     +
                   </Button>
@@ -229,6 +231,7 @@ const Draft: React.FC = () => {
                     }}
                     tabIndex={-1}
                     className="decrement"
+                    variant="tertiary"
                   >
                     -
                   </Button>
@@ -254,6 +257,7 @@ const Draft: React.FC = () => {
                     }}
                     tabIndex={-1}
                     className="increment"
+                    variant="tertiary"
                   >
                     +
                   </Button>
@@ -341,6 +345,7 @@ const Draft: React.FC = () => {
                     }}
                     tabIndex={-1}
                     className="decrement"
+                    variant="tertiary"
                   >
                     -
                   </Button>
@@ -381,6 +386,7 @@ const Draft: React.FC = () => {
                     }}
                     tabIndex={-1}
                     className="increment"
+                    variant="tertiary"
                   >
                     +
                   </Button>
@@ -404,6 +410,7 @@ const Draft: React.FC = () => {
                     }}
                     tabIndex={-1}
                     className="decrement"
+                    variant="tertiary"
                   >
                     -
                   </Button>
@@ -444,6 +451,7 @@ const Draft: React.FC = () => {
                     }}
                     tabIndex={-1}
                     className="increment"
+                    variant="tertiary"
                   >
                     +
                   </Button>
@@ -729,34 +737,30 @@ const Draft: React.FC = () => {
                   isTextArea={true}
                 />
               </Field>
-              <div className="bar">
-                <button type="submit">Create</button>
-                <a className="back" href="#" onClick={() => Router.push("/")}>
-                  or Cancel
-                </a>
-                <div>
-                  £
-                  {total.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}{" "}
-                  (ex. VAT@20%)
-                </div>
-              </div>
+              <Banner>
+                <Banner.Left>
+                  <Link href="/">
+                    <Button variant="secondary">Cancel</Button>
+                  </Link>
+                </Banner.Left>
+                <Banner.Right>
+                  <div>
+                    £
+                    {total.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                    <br />
+                    <small>(ex. VAT)</small>
+                  </div>
+                  <Button type="submit">Create</Button>
+                </Banner.Right>
+              </Banner>
             </form>
           </>
         )}
       </Panel>
       <style jsx>{`
-        .bar {
-          position: fixed;
-          bottom: 0px;
-          left: 0px;
-          background: #ededed;
-          width: 100%;
-          padding: 20px;
-          border-top: 1px solid white;
-        }
         form {
           padding: 20px;
         }

@@ -29,11 +29,11 @@ const Field: React.FC<FieldProps> & {
 };
 
 const FieldFlex: React.FC<FieldFlexProps> = ({ children }) => {
-  return <div className={cx("flex")}>{children}</div>;
+  return <div className={cx("step")}>{children}</div>;
 };
 
 const FieldOptions: React.FC<FieldOptionsProps> = ({ children }) => {
-  return <div className={cx("overflow", "flex")}>{children}</div>;
+  return <div className={cx("overflow")}>{children}</div>;
 };
 
 Field.Flex = FieldFlex;
