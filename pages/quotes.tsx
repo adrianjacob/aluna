@@ -10,7 +10,7 @@ import prisma from "../lib/prisma";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-// index.tsx
+// quotes.tsx
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.quote.findMany({
     // where: { published: true },
@@ -38,10 +38,11 @@ const Blog: React.FC<Props> = (props) => {
   const { data: session, status } = useSession();
   const router = useRouter();
   if (status === "loading") return <p>Loading...</p>;
-  if (!session) {
-    router.push("/login");
-    return null;
-  }
+  console.log(session);
+  // if (!session) {
+  //   router.push("/login");
+  //   return null;
+  // }
   return (
     <Layout
       title={

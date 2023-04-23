@@ -4,35 +4,33 @@ import styles from "./Button.module.scss";
 
 const cx = classNames.bind(styles);
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
   href?: string;
   variant?: string;
   className?: string;
-  [key: string]: any;
 }
 
-const Button: React.FC<Props> = ({
-  onClick,
-  href,
-  children,
-  variant = "primary",
-  className,
-  ...rest
-}) => {
-  const isLink = !!href;
-  const Element = isLink ? "a" : "button";
+const Button = React.forwardRef<HTMLButtonElement, Props>(
+  (
+    { onClick, href, children, variant = "primary", className, ...rest },
+    ref
+  ) => {
+    const isLink = !!href;
+    const Element = isLink ? "a" : "button";
 
-  return (
-    <Element
-      href={href}
-      className={cx("button", variant, className)}
-      onClick={onClick}
-      {...rest}
-    >
-      {children}
-    </Element>
-  );
-};
+    return (
+      <Element
+        href={href}
+        className={cx("button", variant, className)}
+        onClick={onClick}
+        {...rest}
+        ref={ref}
+      >
+        {children}
+      </Element>
+    );
+  }
+);
 
 export default Button;

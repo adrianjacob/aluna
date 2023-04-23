@@ -1,5 +1,3 @@
-// pages/api/auth/[...nextauth].ts
-
 import { NextApiHandler } from "next";
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -33,6 +31,9 @@ const options = {
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       const existingUser = await prisma.user.findUnique({
@@ -46,6 +47,9 @@ const options = {
         // Or you can return a URL to redirect to:
         // return '/unauthorized'
       }
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
     },
   },
   adapter: PrismaAdapter(prisma),
