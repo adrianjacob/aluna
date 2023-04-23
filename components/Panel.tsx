@@ -1,22 +1,17 @@
 import React, { ReactNode } from "react";
+import classNames from "classnames/bind";
+import styles from "./Panel.module.scss";
+
+const cx = classNames.bind(styles);
 
 type Props = {
   children: ReactNode;
+  isPadding?: boolean;
 };
 
-const Panel: React.FC<Props> = ({ children }) => (
+const Panel: React.FC<Props> = ({ children, isPadding }) => (
   <>
-    <main className="panel">{children}</main>
-    <style jsx>{`
-      .panel {
-        background: white;
-        min-height: calc(100vh - 150px);
-        border-top-right-radius: 10px;
-        border-top-left-radius: 10px;
-        position: relative;
-        padding-bottom: 100px;
-      }
-    `}</style>
+    <main className={cx("panel", isPadding && "padding")}>{children}</main>
   </>
 );
 
