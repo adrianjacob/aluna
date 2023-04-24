@@ -1,0 +1,81 @@
+@keyframes fade {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.dialog {
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fade 0.25s forwards;
+  margin: 20px;
+}
+
+.overflow {
+  overflow-y: auto;
+  max-height: 89vh;
+  border-radius: 4px;
+}
+
+.xxs {
+  max-width: 480px;
+}
+
+.xs {
+  max-width: 640px;
+}
+
+.small {
+  max-width: 760px;
+}
+
+.medium {
+  max-width: 960px;
+}
+
+.large {
+  max-width: 1160px;
+}
+
+.xl {
+  max-width: 1350px;
+}
+
+.close {
+  position: absolute;
+  top: -28px;
+  right: -5px;
+}
+
+.text {
+  padding: 20px;
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.grey {
+  background: #f3f2ef;
+}

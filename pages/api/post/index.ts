@@ -25,6 +25,7 @@ export default async function handle(req, res) {
     handleColor,
     internalShootbolt,
     content,
+    published
   } = req.body;
 
   const session = await getSession({ req });
@@ -59,6 +60,7 @@ export default async function handle(req, res) {
       author: { connect: { email: session?.user?.email } },
       datePublished: britishTimeISO,
       dateModified: britishTimeISO,
+      published: published
     },
   });
   res.json(result);

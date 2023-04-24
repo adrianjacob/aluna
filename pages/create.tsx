@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import Field from "../components/Field";
 import Label from "../components/Label";
 import Option from "../components/Option";
+import Modal from "../components/Modal";
 import Button from "../components/Button";
 import Banner from "../components/Banner";
 import Preview from "../components/Preview";
@@ -74,7 +75,17 @@ const Draft: React.FC = () => {
         handleColor,
         internalShootbolt,
         content,
+        published: (e.currentTarget as HTMLButtonElement).name === "order",
       };
+      if (e.currentTarget.name === "order") {
+        const confirmed = window.confirm(
+          "By clicking 'OK', you’ve checked all the details and are happy to place the order, which will be sent to the office for manufacture."
+        );
+        if (!confirmed) {
+          return;
+        }
+      }
+
       await fetch("/api/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -134,6 +145,8 @@ const Draft: React.FC = () => {
   useEffect(() => {
     setLeftDoors(Math.floor(frameWidth / leaf.max));
   }, [frameWidth]);
+
+  const modal = useRef();
 
   return (
     <Layout title="New quote">
@@ -750,9 +763,14 @@ const Draft: React.FC = () => {
 
               <Banner>
                 <Banner.Left>
-                  <Link href="/">
-                    <Button variant="secondary">Cancel</Button>
-                  </Link>
+                  <Button
+                    type="submit"
+                    variant="secondary"
+                    name="save"
+                    onClick={submitData}
+                  >
+                    Save
+                  </Button>
                 </Banner.Left>
                 <Banner.Right>
                   <div>
@@ -764,7 +782,9 @@ const Draft: React.FC = () => {
                     <br />
                     <small>(ex. VAT)</small>
                   </div>
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" name="order" onClick={submitData}>
+                    Order
+                  </Button>
                 </Banner.Right>
               </Banner>
             </form>
