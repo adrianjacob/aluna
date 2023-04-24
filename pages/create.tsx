@@ -8,6 +8,7 @@ import Label from "../components/Label";
 import Option from "../components/Option";
 import Button from "../components/Button";
 import Banner from "../components/Banner";
+import Preview from "../components/Preview";
 import Router from "next/router";
 import { useSession } from "next-auth/react";
 
@@ -17,7 +18,7 @@ const Draft: React.FC = () => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
-  const [frameWidth, setFrameWidth] = useState(2500);
+  const [frameWidth, setFrameWidth] = useState(4000);
   const [frameHeight, setFrameHeight] = useState(2200);
   const [threshold, setThreshold] = useState("Standard (55mm)");
   const [cill, setCill] = useState("Standard (150mm)");
@@ -737,6 +738,16 @@ const Draft: React.FC = () => {
                   isTextArea={true}
                 />
               </Field>
+
+              <Field>
+                <Label>Preview</Label>
+                <Preview
+                  leftDoors={leftDoors}
+                  rightDoors={rightDoors}
+                  frameColor={frameColor}
+                />
+              </Field>
+
               <Banner>
                 <Banner.Left>
                   <Link href="/">
@@ -753,7 +764,7 @@ const Draft: React.FC = () => {
                     <br />
                     <small>(ex. VAT)</small>
                   </div>
-                  <Button type="submit">Create</Button>
+                  <Button type="submit">Submit</Button>
                 </Banner.Right>
               </Banner>
             </form>
