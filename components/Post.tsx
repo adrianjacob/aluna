@@ -1,6 +1,10 @@
 import React from "react";
 import Router from "next/router";
-import ReactMarkdown from "react-markdown";
+import Badge from "./Badge";
+import classNames from "classnames/bind";
+import styles from "./Post.module.scss";
+
+const cx = classNames.bind(styles);
 
 export type PostProps = {
   id: string;
@@ -25,8 +29,45 @@ export type PostProps = {
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
   return (
-    <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
-      <h2>{post.reference}</h2>
+    <div
+      className={cx("post")}
+      onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}
+    >
+      <div className={cx("left")}>
+        <div className={cx("circle")}>XX</div>
+        <div>
+          <div className={cx("ref")}>{post.reference}</div>
+          <div className={cx("cost")}>
+            {new Date(post.dateModified).toLocaleString("en-GB", {
+              // weekday: "short",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}{" "}
+            - £COST
+          </div>
+        </div>
+      </div>
+      <div className={cx("right")}>
+        <Badge isOrdered={post.published} />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          className={cx("chevron")}
+        >
+          <path
+            stroke="#131210"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="m9 20 8-8-8-8"
+          />
+        </svg>
+      </div>
+
+      {/* <h2>{post.reference}</h2>
       <h3>Order = {post.published.toString()}</h3>
       <small>By {authorName}</small>
       <div>Frame width: {post.frameWidth}</div>
@@ -34,13 +75,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       <div>Threshold: {post.threshold}</div>
       <div>Cill: {post.cill}</div>
       <div>Published: {post.datePublished}</div>
-      <div>Modified: {post.dateModified}</div>
-      {/* <ReactMarkdown children={post.content} /> */}
-      <style jsx>{`
-        div {
-          color: inherit;
-        }
-      `}</style>
+      <div>Modified: {post.dateModified}</div> */}
     </div>
   );
 };

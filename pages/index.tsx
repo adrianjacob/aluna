@@ -70,18 +70,6 @@ const Blog: React.FC<Props> = (props) => {
           </>
         )}
       </Panel>
-
-      <style jsx>{`
-         
-          .post {
-            padding: 20px;
-            border-bottom:1px solid #D1D1D1;
-          }
-
-         
-
-        }
-      `}</style>
     </Layout>
   );
 };
