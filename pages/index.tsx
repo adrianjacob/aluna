@@ -45,9 +45,15 @@ const Blog: React.FC<Props> = (props) => {
   return (
     <Layout
       title={
-        session
-          ? `Welcome back, ${session?.user?.name}`
-          : `Aluna Doors & Windows`
+        session ? (
+          <>
+            Welcome back,
+            <br />
+            {session?.user?.name}
+          </>
+        ) : (
+          `Aluna Doors & Windows`
+        )
       }
     >
       <Panel>

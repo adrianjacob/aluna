@@ -113,7 +113,7 @@ const Draft: React.FC = () => {
   // SET TOTAL
   useEffect(() => {
     const sumCill = (frameWidth / 1000) * (cillCost / 100);
-    const doorsPerLeaf = frameHeight <= 2250 ? 395 : 425;
+    const doorsPerLeaf = frameHeight < 2250 ? 395 : 425;
     const sumDoors = doorsPerLeaf * (leftDoors + rightDoors);
     const sumFrameColor = (frameColorCost / 100) * (leftDoors + rightDoors);
     const sumAddOnSize = (frameWidth / 1000) * (addOnSizeCost / 100);

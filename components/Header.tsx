@@ -4,198 +4,59 @@ import Link from "next/link";
 import Button from "../components/Button";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
+import classNames from "classnames/bind";
+import styles from "./Header.module.scss";
+
+const cx = classNames.bind(styles);
 
 const Header: React.FC = ({ title }) => {
   const router = useRouter();
-  const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname;
 
   const { data: session, status } = useSession();
 
-  let left = (
-    <div className="left">
-      <Link href="/">Home</Link>
-      <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
-
-        a {
-          text-decoration: none;
-          color: var(--geist-foreground);
-          display: inline-block;
-        }
-
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style>
-    </div>
-  );
-
-  let right = null;
-
-  if (status === "loading") {
-    left = (
-      <div className="left">
-        <Link href="/">
-          <a className="bold" data-active={isActive("/")}>
-            Home
-          </a>
-        </Link>
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
-      </div>
-    );
-    right = (
-      <div className="right">
-        <p>Validating session ...</p>
-        <style jsx>{`
-          .right {
-            margin-left: auto;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  if (!session) {
-    right = (
-      <div className="right">
-        <Link href="/api/auth/signin">
-          <a data-active={isActive("/signup")}>Log in</a>
-        </Link>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  if (session) {
-    left = (
-      <div className="left">
-        <Link href="/">
-          <a className="bold" data-active={isActive("/")}>
-            Home
-          </a>
-        </Link>
-        {/* <Link href="/drafts">
-          <a data-active={isActive("/drafts")}>My drafts</a>
-        </Link> */}
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
-      </div>
-    );
-    right = (
-      <div className="right">
-        <img src={session.user.image} width="20" height="20" />
-        <p>
-          {session.user.name}
-          {/* ({session.user.email}) */}
-        </p>
-        {/* <Link href="/create">
-          <button>
-            <a>New quote</a>
-          </button>
-        </Link> */}
-        <Button onClick={() => signOut()} variant="text">
-          <a>Log out</a>
-        </Button>
-        <style jsx>{`
-          p {
-            display: inline-block;
-            font-size: 13px;
-            padding-right: 1rem;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          button {
-            border: none;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
   return (
-    <div className="header">
-      <nav>
-        {left}
-        {right}
+    <header className={cx("header")}>
+      <nav className={cx("nav")}>
+        {session && (
+          <>
+            <div className={cx("left")}>
+              <Link href="/">
+                <a className={cx("home")}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                  >
+                    <path
+                      stroke="#FFF"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="m4 10 8-7 8 7v10h-5v-4a3 3 0 0 0-6 0v4H4V10Z"
+                    />
+                  </svg>
+                </a>
+              </Link>
+            </div>
+            <div className={cx("right")}>
+              <Link href="/settings">
+                <a>
+                  <img
+                    src={session.user.image}
+                    width="36"
+                    height="36"
+                    className={cx("profile")}
+                  />
+                </a>
+              </Link>
+              {/* <p>{session.user.name}</p> */}
+            </div>
+          </>
+        )}
       </nav>
-      <h1>{title}</h1>
-      <style jsx>{`
-        h1 {
-          text-align: center;
-          font-size: 24px;
-          text-transform: uppercase;
-        }
-        .header {
-          height: 150px;
-          position: fixed;
-          top: 0px;
-          width: 100%;
-          color: white;
-        }
-        nav {
-          display: flex;
-          padding: 20px;
-          align-items: center;
-        }
-      `}</style>
-    </div>
+      <h1 className={cx("h1")}>{title}</h1>
+    </header>
   );
 };
 
