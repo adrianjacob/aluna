@@ -19,7 +19,7 @@ const Settings: React.FC<Props> = (props) => {
     return null;
   }
   return (
-    <Layout title="Settigs">
+    <Layout title="Settings">
       <Panel>
         <button onClick={() => signOut()}>
           <a>Log out</a>
