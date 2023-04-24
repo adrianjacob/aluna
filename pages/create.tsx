@@ -55,28 +55,10 @@ const Draft: React.FC = () => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    try {
-      const body = {
-        reference,
-        name,
-        contact,
-        email,
-        frameWidth,
-        frameHeight,
-        threshold,
-        cill,
-        leftDoors,
-        rightDoors,
-        openingDirection,
-        trafficDoorSide,
-        frameColor,
-        addOnSize,
-        addOnPosition,
-        handleColor,
-        internalShootbolt,
-        content,
-        published: (e.currentTarget as HTMLButtonElement).name === "order",
-      };
+    const form = e.currentTarget.form as HTMLFormElement;
+    const isValid = form.checkValidity();
+    let confirmed = true;
+    if (isValid) {
       if (e.currentTarget.name === "order") {
         const confirmed = window.confirm(
           "By clicking 'OK', you’ve checked all the details and are happy to place the order, which will be sent to the office for manufacture."
@@ -85,15 +67,41 @@ const Draft: React.FC = () => {
           return;
         }
       }
-
-      await fetch("/api/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      await Router.push("/");
-    } catch (error) {
-      console.error(error);
+      if (confirmed) {
+        try {
+          const body = {
+            reference,
+            name,
+            contact,
+            email,
+            frameWidth,
+            frameHeight,
+            threshold,
+            cill,
+            leftDoors,
+            rightDoors,
+            openingDirection,
+            trafficDoorSide,
+            frameColor,
+            addOnSize,
+            addOnPosition,
+            handleColor,
+            internalShootbolt,
+            content,
+            published: (e.currentTarget as HTMLButtonElement).name === "order",
+          };
+          await fetch("/api/post", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          await Router.push("/");
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    } else {
+      form.reportValidity();
     }
   };
 
