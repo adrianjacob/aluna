@@ -1,12 +1,6 @@
 import React from "react";
-import Link from "next/link";
-import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
 import Panel from "../components/Panel";
-import Banner from "../components/Banner";
-import Button from "../components/Button";
-import Post, { PostProps } from "../components/Post";
-import prisma from "../lib/prisma";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 
