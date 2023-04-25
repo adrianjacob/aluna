@@ -27,6 +27,10 @@ model Quote {
   addOnPosition     String?
   handleColor       String?
   internalShootbolt String?
+  glazing           String?
+  blinds            String?
+  trickleVents      String?
+  delivery          String?
   content           String?
   published         Boolean @default(false)
   author            User?   @relation(fields: [authorId], references: [id])

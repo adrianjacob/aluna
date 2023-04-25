@@ -39,8 +39,15 @@ const Draft: React.FC = () => {
     "Standard to match door colour"
   );
   const [internalShootboltCost, setInternalShootboltCost] = useState(0);
+  const [glazing, setGlazing] = useState("Unglazed");
+  const [glazingCost, setGlazingCost] = useState(0);
+  const [blinds, setBlinds] = useState("N/a");
+  const [blindsCost, setBlindsCost] = useState(0);
+  const [trickleVents, setTrickleVents] = useState("N/a");
+  const [trickleVentsCost, setTrickleVentsCost] = useState(0);
+  const [delivery, setDelivery] = useState("Assembled");
+  const [deliveryCost, setDeliveryCost] = useState(0);
   const [content, setContent] = useState("");
-
   const frameWidthRef = useRef<HTMLInputElement>(null);
   const frameHeightRef = useRef<HTMLInputElement>(null);
   const leftDoorsRef = useRef<HTMLInputElement>(null);
@@ -131,6 +138,34 @@ const Draft: React.FC = () => {
     setInternalShootboltCost(cost);
   };
 
+  const handleGlazing = (option: string, cost: number) => {
+    setGlazing(option);
+    setGlazingCost(cost);
+  };
+
+  const handleBlinds = (option: string, cost: number) => {
+    setBlinds(option);
+    setBlindsCost(cost);
+  };
+
+  const handleTrickleVents = (option: string, cost: number) => {
+    setTrickleVents(option);
+    setTrickleVentsCost(cost);
+  };
+
+  const handleDelivery = (option: string, cost: number) => {
+    setDelivery(option);
+    setDeliveryCost(cost);
+  };
+
+  // MAKE KIT FORM DEFAULT IF LARGER DIMENSIONS
+  useEffect(() => {
+    if (frameWidth > 4800 || frameHeight > 2200) {
+      setDelivery("Kit form");
+      setDeliveryCost(7500);
+    }
+  }, [frameWidth, frameHeight]);
+
   // SET TOTAL
   useEffect(() => {
     const sumCill = (frameWidth / 1000) * (cillCost / 100);
@@ -140,13 +175,22 @@ const Draft: React.FC = () => {
     const sumAddOnSize = (frameWidth / 1000) * (addOnSizeCost / 100);
     const sumHandleColour = handleColorCost / 100;
     const sumInternalShootbolt = internalShootboltCost / 100;
+    const sumTrickleVents = trickleVentsCost / 100;
+    const sumGlazing =
+      ((frameWidth * frameHeight) / 1000000) * (glazingCost / 100);
+    const sumBlinds = (leftDoors + rightDoors) * (blindsCost / 100);
+    const sumDelivery = deliveryCost / 100;
     setTotal(
       sumCill +
         sumDoors +
         sumFrameColor +
         sumAddOnSize +
         sumHandleColour +
-        sumInternalShootbolt
+        sumInternalShootbolt +
+        sumTrickleVents +
+        sumGlazing +
+        sumBlinds +
+        sumDelivery
     );
   });
 
@@ -747,6 +791,128 @@ const Draft: React.FC = () => {
                       </Option>
                     </>
                   )}
+                </Field.Options>
+              </Field>
+
+              <Field help="28mm double glazing units">
+                <Label>Glazing*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={glazing === "Unglazed"}
+                    onClick={() => handleGlazing("Unglazed", 0)}
+                  >
+                    Unglazed
+                  </Option>
+                  <Option
+                    isActive={glazing === "Clear Low E 1.2 U-value"}
+                    onClick={() =>
+                      handleGlazing("Clear Low E 1.2 U-value", 4900)
+                    }
+                  >
+                    Clear Low E 1.2 U-value
+                  </Option>
+                  <Option
+                    isActive={glazing === "Clear Ultra Low E 1.1 U-value"}
+                    onClick={() =>
+                      handleGlazing("Clear Ultra Low E 1.1 U-value", 5600)
+                    }
+                  >
+                    Clear Ultra Low E 1.1 U-value
+                  </Option>
+                  <Option
+                    isActive={
+                      glazing ===
+                      "Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm Unit"
+                    }
+                    onClick={() =>
+                      handleGlazing(
+                        "Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm Unit",
+                        8100
+                      )
+                    }
+                  >
+                    Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm
+                    Unit
+                  </Option>
+                  <Option
+                    isActive={glazing === "Other"}
+                    onClick={() => handleGlazing("Other", 0)}
+                  >
+                    Other (POA)
+                  </Option>
+                </Field.Options>
+              </Field>
+
+              <Field help="Max 2300mm high and Max 2sqm per panel. Only available with clear Low E glazing. Office will call to discuss track handing and colour options">
+                <Label>Blinds*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={blinds === "N/a"}
+                    onClick={() => handleBlinds("N/a", 0)}
+                  >
+                    N/a
+                  </Option>
+                  {glazing === "Clear Low E 1.2 U-value" && (
+                    <Option
+                      isActive={blinds === "Integrated Blinds 1.2 U-value"}
+                      onClick={() =>
+                        handleBlinds("Integrated Blinds 1.2 U-value", 20000)
+                      }
+                    >
+                      Integrated Blinds 1.2 U-value
+                    </Option>
+                  )}
+                </Field.Options>
+              </Field>
+
+              <Field help="Each trickle vent provides up to 2500mm² of exhaust air">
+                <Label>Trickle vents*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={trickleVents === "N/a"}
+                    onClick={() => handleTrickleVents("N/a", 0)}
+                  >
+                    N/a
+                  </Option>
+                  <Option
+                    isActive={trickleVents === "1"}
+                    onClick={() => handleTrickleVents("1", 3750)}
+                  >
+                    1
+                  </Option>
+                  <Option
+                    isActive={trickleVents === "2"}
+                    onClick={() => handleTrickleVents("2", 7500)}
+                  >
+                    2
+                  </Option>
+                  <Option
+                    isActive={trickleVents === "3"}
+                    onClick={() => handleTrickleVents("3", 11250)}
+                  >
+                    3
+                  </Option>
+                </Field.Options>
+              </Field>
+
+              <Field help="Assembled delivery is only available for bifolds up to 4800mm wide x 2200mm high. Please ensure someone is available at the delivery address to assist with offloading and fitting location is accessible for size ordered. Redelivery charges may apply.">
+                <Label>Delivery*</Label>
+                <Field.Options>
+                  {frameWidth <= 4800 && frameHeight <= 2200 && (
+                    <Option
+                      isActive={delivery === "Assembled"}
+                      onClick={() => handleDelivery("Assembled", 0)}
+                    >
+                      Assembled
+                    </Option>
+                  )}
+
+                  <Option
+                    isActive={delivery === "Kit form"}
+                    onClick={() => handleDelivery("Kit form", 7500)}
+                  >
+                    Kit form
+                  </Option>
                 </Field.Options>
               </Field>
 

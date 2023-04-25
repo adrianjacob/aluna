@@ -24,9 +24,13 @@ export default async function handle(req, res) {
     addOnPosition,
     handleColor,
     internalShootbolt,
+    glazing,
+    blinds,
+    trickleVents,
+    delivery,
     content,
     published,
-    total
+    total,
   } = req.body;
 
   const session = await getSession({ req });
@@ -57,12 +61,16 @@ export default async function handle(req, res) {
       addOnPosition: addOnPosition,
       handleColor: handleColor,
       internalShootbolt: internalShootbolt,
+      glazing: glazing,
+      blinds: blinds,
+      trickleVents: trickleVents,
+      delivery: delivery,
       content: content,
       author: { connect: { email: session?.user?.email } },
       datePublished: britishTimeISO,
       dateModified: britishTimeISO,
       published: published,
-      total: total.toString()
+      total: total.toString(),
     },
   });
   res.json(result);
