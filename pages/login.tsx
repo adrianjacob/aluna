@@ -1,4 +1,5 @@
 import { signIn, useSession, getSession } from "next-auth/react";
+import Image from "next/image";
 import Layout from "../components/Layout";
 import Panel from "../components/Panel";
 import Button from "../components/Button";
@@ -14,7 +15,10 @@ export default function Login() {
   return (
     <Layout title="Welcome to Aluna">
       <Panel isPadding>
-        <div>
+        <div className="asset">
+          <Image src="/preview.jpeg" alt="Welcome" width="1000" height="455" />
+        </div>
+        <div className="logins">
           <button onClick={() => signIn("google")}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +48,13 @@ export default function Login() {
           <button onClick={() => signIn("github")}>Sign in with GitHub</button>
         </div>
         <style jsx>{`
-          div {
+          div.asset {
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            margin-bottom: 20px;
+          }
+          div.logins {
             display: grid;
             gap: 20px;
             max-width: 375px;
