@@ -557,34 +557,32 @@ const Draft: React.FC = () => {
                   <Option
                     isActive={
                       frameColor ===
-                      "White internal (RAL 9016 Gloss) / Anthracite external (RAL 7016 Matt)"
+                      "Anthracite external (RAL 7016 Matt) / White internal (RAL 9016 Gloss)"
                     }
                     onClick={() =>
                       handleFrameColor(
-                        "White internal (RAL 9016 Gloss) / Anthracite external (RAL 7016 Matt)",
+                        "Anthracite external (RAL 7016 Matt) / White internal (RAL 9016 Gloss)",
                         0
                       )
                     }
                   >
-                    White internal
-                    <br />
-                    (RAL 9016 Gloss) / Anthracite external (RAL 7016 Matt)
+                    Anthracite external (RAL 7016 Matt) / White internal (RAL
+                    9016 Gloss)
                   </Option>
                   <Option
                     isActive={
                       frameColor ===
-                      "White internal (RAL 9016 Gloss) / Black external (RAL 9005 Matt)"
+                      "Black external (RAL 9005 Matt) / White internal (RAL 9016 Gloss)"
                     }
                     onClick={() =>
                       handleFrameColor(
-                        "White internal (RAL 9016 Gloss) / Black external (RAL 9005 Matt)",
+                        "Black external (RAL 9005 Matt) / White internal (RAL 9016 Gloss)",
                         0
                       )
                     }
                   >
-                    White internal
-                    <br />
-                    (RAL 9016 Gloss) / Black external (RAL 9005 Matt)
+                    Black external (RAL 9005 Matt) / White internal (RAL 9016
+                    Gloss)
                   </Option>
                   <Option
                     isActive={frameColor === "Single RAL Internal & External"}
