@@ -33,6 +33,7 @@ model Quote {
   authorId          String?
   datePublished     String // @default(now()) doesnt work for british time - using logic in code using date-fns-tz - also saving as string as issue with BST if using DateTime
   dateModified      String // @updatedAt
+  total             String?
 }
 
 model Account {

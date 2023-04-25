@@ -31,13 +31,14 @@
   font-weight: 600;
   font-size: 12px;
   margin-right: 15px;
+  flex: none;
 }
 
 .ref {
   font-weight: 600;
   margin-bottom: 4px;
   text-transform: uppercase;
-  width: 170px;
+  max-width: calc(100vw - 210px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

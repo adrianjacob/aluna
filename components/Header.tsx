@@ -30,9 +30,9 @@ const Header: React.FC = ({ title }) => {
                   >
                     <path
                       stroke="#FFF"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
                       d="m4 10 8-7 8 7v10h-5v-4a3 3 0 0 0-6 0v4H4V10Z"
                     />
                   </svg>

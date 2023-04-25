@@ -24,6 +24,7 @@ export type PostProps = {
   published: boolean;
   datePublished: string;
   dateModified: string;
+  total: string;
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
@@ -44,7 +45,12 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
               month: "short",
               day: "numeric",
             })}{" "}
-            - £COST
+            - £
+            {post.total &&
+              Number(post.total).toLocaleString("en-GB", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
           </div>
         </div>
       </div>
@@ -59,9 +65,9 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         >
           <path
             stroke="#131210"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
             d="m9 20 8-8-8-8"
           />
         </svg>

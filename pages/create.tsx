@@ -89,6 +89,7 @@ const Draft: React.FC = () => {
             internalShootbolt,
             content,
             published: (e.currentTarget as HTMLButtonElement).name === "order",
+            total,
           };
           await fetch("/api/post", {
             method: "POST",
