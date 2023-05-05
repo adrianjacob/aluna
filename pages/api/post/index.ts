@@ -21,7 +21,9 @@ export default async function handle(req, res) {
     trafficDoorSide,
     frameColor,
     addOnSize,
-    addOnPosition,
+    addOnPositionTop,
+    addOnPositionLeft,
+    addOnPositionRight,
     handleColor,
     internalShootbolt,
     glazing,
@@ -58,7 +60,9 @@ export default async function handle(req, res) {
       trafficDoorSide: trafficDoorSide,
       frameColor: frameColor,
       addOnSize: addOnSize,
-      addOnPosition: addOnPosition,
+      addOnPositionTop: addOnPositionTop.toString(),
+      addOnPositionLeft: addOnPositionLeft.toString(),
+      addOnPositionRight: addOnPositionRight.toString(),
       handleColor: handleColor,
       internalShootbolt: internalShootbolt,
       glazing: glazing,
@@ -70,7 +74,10 @@ export default async function handle(req, res) {
       datePublished: britishTimeISO,
       dateModified: britishTimeISO,
       published: published,
-      total: total.toString(),
+      total: total.toLocaleString('en-GB', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }),
     },
   });
   res.json(result);

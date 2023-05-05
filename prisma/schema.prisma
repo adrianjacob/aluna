@@ -9,35 +9,37 @@ generator client {
 }
 
 model Quote {
-  id                String  @id @default(cuid())
-  reference         String
-  name              String
-  contact           String
-  email             String
-  frameWidth        String?
-  frameHeight       String?
-  threshold         String?
-  cill              String?
-  leftDoors         String?
-  rightDoors        String?
-  openingDirection  String?
-  trafficDoorSide   String?
-  frameColor        String?
-  addOnSize         String?
-  addOnPosition     String?
-  handleColor       String?
-  internalShootbolt String?
-  glazing           String?
-  blinds            String?
-  trickleVents      String?
-  delivery          String?
-  content           String?
-  published         Boolean @default(false)
-  author            User?   @relation(fields: [authorId], references: [id])
-  authorId          String?
-  datePublished     String // @default(now()) doesnt work for british time - using logic in code using date-fns-tz - also saving as string as issue with BST if using DateTime
-  dateModified      String // @updatedAt
-  total             String?
+  id                 String  @id @default(cuid())
+  reference          String
+  name               String
+  contact            String
+  email              String
+  frameWidth         String?
+  frameHeight        String?
+  threshold          String?
+  cill               String?
+  leftDoors          String?
+  rightDoors         String?
+  openingDirection   String?
+  trafficDoorSide    String?
+  frameColor         String?
+  addOnSize          String?
+  addOnPositionTop   String?
+  addOnPositionLeft  String?
+  addOnPositionRight String?
+  handleColor        String?
+  internalShootbolt  String?
+  glazing            String?
+  blinds             String?
+  trickleVents       String?
+  delivery           String?
+  content            String?
+  published          Boolean @default(false)
+  author             User?   @relation(fields: [authorId], references: [id])
+  authorId           String?
+  datePublished      String // @default(now()) doesnt work for british time - using logic in code using date-fns-tz - also saving as string as issue with BST if using DateTime
+  dateModified       String // @updatedAt
+  total              String?
 }
 
 model Account {

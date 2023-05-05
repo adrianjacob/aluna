@@ -45,12 +45,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
               month: "short",
               day: "numeric",
             })}{" "}
-            - £
-            {post.total &&
-              Number(post.total).toLocaleString("en-GB", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+            - £{post.total}
           </div>
         </div>
       </div>

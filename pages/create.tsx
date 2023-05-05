@@ -32,7 +32,9 @@ const Draft: React.FC = () => {
   const [frameColorCost, setFrameColorCost] = useState(0);
   const [addOnSize, setAddOnSize] = useState("None");
   const [addOnSizeCost, setAddOnSizeCost] = useState(0);
-  const [addOnPosition, setAddOnPosition] = useState("Top");
+  const [addOnPositionTop, setAddOnPositionTop] = useState(false);
+  const [addOnPositionLeft, setAddOnPositionLeft] = useState(false);
+  const [addOnPositionRight, setAddOnPositionRight] = useState(false);
   const [handleColor, setHandleColor] = useState("White");
   const [handleColorCost, setHandleColorCost] = useState(0);
   const [internalShootbolt, setInternalShootbolt] = useState(
@@ -91,7 +93,9 @@ const Draft: React.FC = () => {
             trafficDoorSide,
             frameColor,
             addOnSize,
-            addOnPosition,
+            addOnPositionTop,
+            addOnPositionLeft,
+            addOnPositionRight,
             handleColor,
             internalShootbolt,
             glazing,
@@ -177,6 +181,15 @@ const Draft: React.FC = () => {
     const sumDoors = doorsPerLeaf * (leftDoors + rightDoors);
     const sumFrameColor = (frameColorCost / 100) * (leftDoors + rightDoors);
     const sumAddOnSize = (frameWidth / 1000) * (addOnSizeCost / 100);
+    const sumAddOnPositionTop = addOnPositionTop
+      ? (addOnSizeCost / 100) * (frameWidth / 1000)
+      : 0;
+    const sumAddOnPositionLeft = addOnPositionLeft
+      ? (addOnSizeCost / 100) * (frameHeight / 1000)
+      : 0;
+    const sumAddOnPositionRight = addOnPositionRight
+      ? (addOnSizeCost / 100) * (frameHeight / 1000)
+      : 0;
     const sumHandleColour = handleColorCost / 100;
     const sumInternalShootbolt = internalShootboltCost / 100;
     const sumTrickleVents = trickleVentsCost / 100;
@@ -189,6 +202,9 @@ const Draft: React.FC = () => {
         sumDoors +
         sumFrameColor +
         sumAddOnSize +
+        sumAddOnPositionTop +
+        sumAddOnPositionLeft +
+        sumAddOnPositionRight +
         sumHandleColour +
         sumInternalShootbolt +
         sumTrickleVents +
@@ -656,7 +672,12 @@ const Draft: React.FC = () => {
                 <Field.Options>
                   <Option
                     isActive={addOnSize === "None"}
-                    onClick={() => handleAddOnSize("None", 0)}
+                    onClick={() => {
+                      handleAddOnSize("None", 0);
+                      setAddOnPositionTop(false);
+                      setAddOnPositionRight(false);
+                      setAddOnPositionLeft(false);
+                    }}
                   >
                     None
                   </Option>
@@ -675,29 +696,31 @@ const Draft: React.FC = () => {
                 </Field.Options>
               </Field>
 
-              <Field help="Select all that apply">
-                <Label>Add-on position* [HAVE QUERIES]</Label>
-                <Field.Options>
-                  <Option
-                    isActive={addOnPosition === "Top"}
-                    onClick={() => setAddOnPosition("Top")}
-                  >
-                    Top
-                  </Option>
-                  <Option
-                    isActive={addOnPosition === "Right"}
-                    onClick={() => setAddOnPosition("Right")}
-                  >
-                    Right
-                  </Option>
-                  <Option
-                    isActive={addOnPosition === "Left"}
-                    onClick={() => setAddOnPosition("Left")}
-                  >
-                    Left
-                  </Option>
-                </Field.Options>
-              </Field>
+              {addOnSize !== "None" && (
+                <Field help="Select all that apply">
+                  <Label>Add-on position*</Label>
+                  <Field.Options>
+                    <Option
+                      isActive={addOnPositionTop}
+                      onClick={() => setAddOnPositionTop(!addOnPositionTop)}
+                    >
+                      Top
+                    </Option>
+                    <Option
+                      isActive={addOnPositionRight}
+                      onClick={() => setAddOnPositionRight(!addOnPositionRight)}
+                    >
+                      Right
+                    </Option>
+                    <Option
+                      isActive={addOnPositionLeft}
+                      onClick={() => setAddOnPositionLeft(!addOnPositionLeft)}
+                    >
+                      Left
+                    </Option>
+                  </Field.Options>
+                </Field>
+              )}
 
               <Field>
                 <Label>Handle colour*</Label>

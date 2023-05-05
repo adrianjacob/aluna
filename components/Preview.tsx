@@ -13,7 +13,7 @@ type Props = {
 const Door: React.FC<Props> = ({ pos, frameColor }) => {
   return (
     <div className={cx("door", frameColor.split(" ")[0].toLocaleLowerCase())}>
-      {pos}
+      <div className={cx("pos")}>{pos}</div>
     </div>
   );
 };
