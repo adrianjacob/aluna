@@ -282,13 +282,26 @@ const Draft: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setFrameWidth((frameWidth) => +frameWidth - 5);
-                      frameWidthRef.current?.focus();
+                      // frameWidthRef.current?.focus();
                     }}
                     tabIndex={-1}
                     className="decrement"
                     variant="tertiary"
                   >
-                    -
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="2"
+                      fill="none"
+                    >
+                      <path
+                        stroke="#001A72"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M1 1h10"
+                      />
+                    </svg>
                   </Button>
                   <Input
                     onChange={(e) => setFrameWidth(e.target.value)}
@@ -305,13 +318,26 @@ const Draft: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setFrameWidth((frameWidth) => +frameWidth + 5);
-                      frameWidthRef.current?.focus();
+                      // frameWidthRef.current?.focus();
                     }}
                     tabIndex={-1}
                     className="increment"
                     variant="tertiary"
                   >
-                    +
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        stroke="#001A72"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M1 9h16M9 1v16"
+                      />
+                    </svg>
                   </Button>
                 </Field.Flex>
               </Field>
@@ -322,13 +348,26 @@ const Draft: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setFrameHeight((frameHeight) => +frameHeight - 5);
-                      frameHeightRef.current?.focus();
+                      // frameHeightRef.current?.focus();
                     }}
                     tabIndex={-1}
                     className="decrement"
                     variant="tertiary"
                   >
-                    -
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="2"
+                      fill="none"
+                    >
+                      <path
+                        stroke="#001A72"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M1 1h10"
+                      />
+                    </svg>
                   </Button>
                   <Input
                     onChange={(e) => setFrameHeight(e.target.value)}
@@ -348,13 +387,26 @@ const Draft: React.FC = () => {
                       setFrameHeight((frameHeight) =>
                         Math.min(+frameHeight + 5, 2500)
                       );
-                      frameHeightRef.current?.focus();
+                      // frameHeightRef.current?.focus();
                     }}
                     tabIndex={-1}
                     className="increment"
                     variant="tertiary"
                   >
-                    +
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        stroke="#001A72"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M1 9h16M9 1v16"
+                      />
+                    </svg>
                   </Button>
                 </Field.Flex>
               </Field>
@@ -442,7 +494,20 @@ const Draft: React.FC = () => {
                     className="decrement"
                     variant="tertiary"
                   >
-                    -
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="2"
+                      fill="none"
+                    >
+                      <path
+                        stroke="#001A72"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M1 1h10"
+                      />
+                    </svg>
                   </Button>
                   <Input
                     type="number"
@@ -483,7 +548,20 @@ const Draft: React.FC = () => {
                     className="increment"
                     variant="tertiary"
                   >
-                    +
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        stroke="#001A72"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M1 9h16M9 1v16"
+                      />
+                    </svg>
                   </Button>
                 </Field.Flex>
               </Field>
@@ -501,13 +579,26 @@ const Draft: React.FC = () => {
                         Math.max(+rightDoors - 1, 0)
                       );
 
-                      leftDoorsRef.current?.focus();
+                      // rightDoorsRef.current?.focus();
                     }}
                     tabIndex={-1}
                     className="decrement"
                     variant="tertiary"
                   >
-                    -
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="2"
+                      fill="none"
+                    >
+                      <path
+                        stroke="#001A72"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M1 1h10"
+                      />
+                    </svg>
                   </Button>
                   <Input
                     type="number"
@@ -542,13 +633,26 @@ const Draft: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setRightDoors((rightDoors) => +rightDoors + 1);
-                      rightDoorsRef.current?.focus();
+                      // rightDoorsRef.current?.focus();
                     }}
                     tabIndex={-1}
                     className="increment"
                     variant="tertiary"
                   >
-                    +
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      fill="none"
+                    >
+                      <path
+                        stroke="#001A72"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M1 9h16M9 1v16"
+                      />
+                    </svg>
                   </Button>
                 </Field.Flex>
               </Field>

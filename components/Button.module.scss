@@ -1,6 +1,6 @@
 .button {
   font-weight: 600;
-  min-width: 39px;
+  // min-width: 39px;
   border: 0px;
   background: #d1d1d1;
   border-radius: 5px;
@@ -8,6 +8,9 @@
   text-transform: uppercase;
   padding: 9px 15px;
   color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .primary {
@@ -36,9 +39,17 @@
 .decrement {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  border: 2px solid transparent;
+  &:hover {
+    border: 2px solid #0bb4aa;
+  }
 }
 
 .increment {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  border: 2px solid transparent;
+  &:hover {
+    border: 2px solid #0bb4aa;
+  }
 }
