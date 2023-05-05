@@ -1,9 +1,14 @@
-// _app.tsx
-
-import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
 import { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react";
 
-const App = ({ Component, pageProps }: AppProps) => {
+interface MyAppProps extends AppProps {
+  pageProps: {
+    session: Session;
+  };
+}
+
+const App = ({ Component, pageProps }: MyAppProps) => {
   return (
     <SessionProvider session={pageProps.session}>
       <Component {...pageProps} />

@@ -39,9 +39,9 @@ const Modal = forwardRef(({ children }, ref) => {
             data-testid="modal"
             className={cx("modal")}
             onClick={(e) => {
-              if (e.target.dataset.testid) {
-                close();
-              }
+              // if (e.target.dataset.testid) {
+              //   close();
+              // }
             }}
           >
             <div

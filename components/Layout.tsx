@@ -3,7 +3,7 @@ import Header from "./Header";
 
 type Props = {
   children: ReactNode;
-  title: string;
+  title?: any;
 };
 
 const Layout: React.FC<Props> = ({ title, children }) => (

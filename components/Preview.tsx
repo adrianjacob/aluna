@@ -8,6 +8,7 @@ type Props = {
   rightDoors?: number;
   leftDoors?: number;
   frameColor?: string;
+  pos?: string;
 };
 
 const Door: React.FC<Props> = ({ pos, frameColor }) => {
@@ -22,10 +23,10 @@ const Preview: React.FC<Props> = ({ leftDoors, rightDoors, frameColor }) => {
   return (
     <div className={cx("preview")}>
       {Array.from({ length: leftDoors }).map((index) => (
-        <Door pos="L" key={index} frameColor={frameColor} />
+        <Door pos="L" key={`left-${index}`} frameColor={frameColor} />
       ))}
       {Array.from({ length: rightDoors }).map((index) => (
-        <Door pos="R" key={index} frameColor={frameColor} />
+        <Door pos="R" key={`right-${index}`} frameColor={frameColor} />
       ))}
     </div>
   );

@@ -4,7 +4,7 @@ import Panel from "../components/Panel";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 
-const Settings: React.FC<Props> = (props) => {
+const Settings: React.FC = (props) => {
   const { data: session, status } = useSession();
   const router = useRouter();
   if (status === "loading") return <p>Loading...</p>;
