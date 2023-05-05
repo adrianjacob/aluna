@@ -6,87 +6,80 @@ import { utcToZonedTime, format } from "date-fns-tz";
 // Required fields in body: title
 // Optional fields in body: content
 export default async function handle(req, res) {
-  try {
-    const {
-      reference,
-      name,
-      contact,
-      email,
-      frameWidth,
-      frameHeight,
-      threshold,
-      cill,
-      leftDoors,
-      rightDoors,
-      openingDirection,
-      trafficDoorSide,
-      frameColor,
-      addOnSize,
-      addOnPositionTop,
-      addOnPositionLeft,
-      addOnPositionRight,
-      handleColor,
-      internalShootbolt,
-      glazing,
-      blinds,
-      trickleVents,
-      delivery,
-      content,
-      published,
-      total,
-    } = req.body;
+  const {
+    reference,
+    name,
+    contact,
+    email,
+    frameWidth,
+    frameHeight,
+    threshold,
+    cill,
+    leftDoors,
+    rightDoors,
+    openingDirection,
+    trafficDoorSide,
+    frameColor,
+    addOnSize,
+    addOnPositionTop,
+    addOnPositionLeft,
+    addOnPositionRight,
+    handleColor,
+    internalShootbolt,
+    glazing,
+    blinds,
+    trickleVents,
+    delivery,
+    content,
+    published,
+    total,
+  } = req.body;
 
-    const session = await getSession({ req });
+  const session = await getSession({ req });
 
-    const currentDate = new Date();
-    const britishTimeZone = "Europe/London";
-    const britishTime = utcToZonedTime(currentDate, britishTimeZone);
-    const britishTimeISO = format(britishTime, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", {
-      timeZone: britishTimeZone,
-    });
+  const currentDate = new Date();
+  const britishTimeZone = "Europe/London";
+  const britishTime = utcToZonedTime(currentDate, britishTimeZone);
+  const britishTimeISO = format(britishTime, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", {
+    timeZone: britishTimeZone,
+  });
 
-    const result = await prisma.quote.create({
-      data: {
-        reference: reference,
-        name: name,
-        contact: contact,
-        email: email,
-        frameWidth: frameWidth.toString(),
-        frameHeight: frameHeight.toString(),
-        threshold: threshold,
-        cill: cill,
-        leftDoors: leftDoors.toString(),
-        rightDoors: rightDoors.toString(),
-        openingDirection: openingDirection,
-        trafficDoorSide: trafficDoorSide,
-        frameColor: frameColor,
-        addOnSize: addOnSize,
-        addOnPositionTop: addOnPositionTop.toString(),
-        addOnPositionLeft: addOnPositionLeft.toString(),
-        addOnPositionRight: addOnPositionRight.toString(),
-        handleColor: handleColor,
-        internalShootbolt: internalShootbolt,
-        glazing: glazing,
-        blinds: blinds,
-        trickleVents: trickleVents,
-        delivery: delivery,
-        content: content,
-        author: { connect: { email: session?.user?.email } },
-        datePublished: britishTimeISO,
-        dateModified: britishTimeISO,
-        published: published,
-        total: total.toLocaleString("en-GB", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }),
-      },
-    });
-
-    res.json(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "An error occurred while processing the request." });
-  }
+  const result = await prisma.quote.create({
+    data: {
+      reference: reference,
+      name: name,
+      contact: contact,
+      email: email,
+      frameWidth: frameWidth.toString(),
+      frameHeight: frameHeight.toString(),
+      threshold: threshold,
+      cill: cill,
+      leftDoors: leftDoors.toString(),
+      rightDoors: rightDoors.toString(),
+      openingDirection: openingDirection,
+      trafficDoorSide: trafficDoorSide,
+      frameColor: frameColor,
+      addOnSize: addOnSize,
+      addOnPositionTop: addOnPositionTop.toString(),
+      addOnPositionLeft: addOnPositionLeft.toString(),
+      addOnPositionRight: addOnPositionRight.toString(),
+      handleColor: handleColor,
+      internalShootbolt: internalShootbolt,
+      glazing: glazing,
+      blinds: blinds,
+      trickleVents: trickleVents,
+      delivery: delivery,
+      content: content,
+      author: { connect: { email: session?.user?.email } },
+      datePublished: britishTimeISO,
+      dateModified: britishTimeISO,
+      published: published,
+      total: total.toLocaleString('en-GB', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }),
+    },
+  });
+  console.log(result);
+  res.json(result);
 }
-
-
