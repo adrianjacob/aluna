@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, RefObject } from "react";
 import classNames from "classnames/bind";
 import styles from "./Button.module.scss";
 
@@ -11,24 +11,24 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, Props>(
+const Button = forwardRef<HTMLButtonElement, Props>(
   (
     { onClick, href, children, variant = "primary", className, ...rest },
-    ref
+    ref: RefObject<HTMLButtonElement & HTMLAnchorElement>
   ) => {
     const isLink = !!href;
     const Element = isLink ? "a" : "button";
 
     return (
-      <Element
-        href={href}
+      <button
+        // href={href}
         className={cx("button", variant, className)}
         onClick={onClick}
         {...rest}
         ref={ref}
       >
         {children}
-      </Element>
+      </button>
     );
   }
 );

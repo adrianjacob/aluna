@@ -9,7 +9,11 @@ import styles from "./Header.module.scss";
 
 const cx = classNames.bind(styles);
 
-const Header: React.FC = ({ title }) => {
+interface Props {
+  title: string;
+}
+
+const Header: React.FC<Props> = ({ title }) => {
   const router = useRouter();
 
   const { data: session, status } = useSession();
