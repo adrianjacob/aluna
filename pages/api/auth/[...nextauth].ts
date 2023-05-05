@@ -42,8 +42,9 @@ const options = {
       if (existingUser) {
         return true;
       } else {
-        // Return false to display a default error message
-        return false;
+        
+        // return false;
+        return true; // TEMP FOR TESTING
         // Or you can return a URL to redirect to:
         // return '/unauthorized'
       }
