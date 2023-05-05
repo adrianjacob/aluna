@@ -64,7 +64,7 @@ const Blog: React.FC<Props> = (props) => {
             <Banner>
               <Banner.Right>
                 <Link href="/create">
-                  <Button>New quote</Button>
+                  <Button>New quote 2</Button>
                 </Link>
               </Banner.Right>
             </Banner>

@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 // index.tsx
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetStaticProps = async () => {
   const feed = await prisma.quote.findMany({
     // where: { published: true },
     orderBy: {
@@ -26,7 +26,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { feed },
-    revalidate: 10,
   };
 };
 
