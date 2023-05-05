@@ -108,12 +108,18 @@ const Draft: React.FC = () => {
             published: (e.currentTarget as HTMLButtonElement).name === "order",
             total,
           };
-          await fetch("/api/post", {
+          const response = await fetch("/api/post", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
           });
-          await Router.push("/");
+          if (response.ok) {
+            await Router.push("/");
+          } else {
+            console.error(
+              `Failed to save data: ${response.status} ${response.statusText}`
+            );
+          }
         } catch (error) {
           console.error(error);
         }
