@@ -436,7 +436,7 @@ const Draft: React.FC = () => {
                     onClick={() => {
                       setLeftDoors((leftDoors) => Math.max(+leftDoors - 1, 0)); // ensure the resulting value is not less than 0
 
-                      leftDoorsRef.current?.focus();
+                      // leftDoorsRef.current?.focus();
                     }}
                     tabIndex={-1}
                     className="decrement"
@@ -477,7 +477,7 @@ const Draft: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setLeftDoors((leftDoors) => +leftDoors + 1);
-                      leftDoorsRef.current?.focus();
+                      // leftDoorsRef.current?.focus();
                     }}
                     tabIndex={-1}
                     className="increment"
