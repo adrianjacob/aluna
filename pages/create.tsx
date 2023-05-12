@@ -78,7 +78,7 @@ const Draft: React.FC = () => {
     if (isValid) {
       if (e.currentTarget.name === "order") {
         const confirmed = window.confirm(
-          "By clicking 'OK', you’ve checked all the details and are happy to place the order, which will be sent to the office for manufacture."
+          "By clicking 'OK', you’ve checked all the details and are happy to place the order, which will be sent to the office for manufacture. The office will send email confirmation once this is processed."
         );
         if (!confirmed) {
           return;
@@ -757,7 +757,14 @@ const Draft: React.FC = () => {
                   </Option>
                   <Option
                     isActive={openingDirection === "In"}
-                    onClick={() => setOpeningDirection("In")}
+                    onClick={() => {
+                      const confirmed = window.confirm(
+                        "Note: Not a popular option and the doors could clash with internal furniture."
+                      );
+                      if (confirmed) {
+                        setOpeningDirection("In");
+                      }
+                    }}
                   >
                     In
                   </Option>
@@ -1027,7 +1034,10 @@ const Draft: React.FC = () => {
                 <Field.Options>
                   <Option
                     isActive={glazing === "Unglazed"}
-                    onClick={() => handleGlazing("Unglazed", 0)}
+                    onClick={() => {
+                      handleGlazing("Unglazed", 0);
+                      handleBlinds("N/a", 0);
+                    }}
                   >
                     Unglazed
                   </Option>
@@ -1041,9 +1051,10 @@ const Draft: React.FC = () => {
                   </Option>
                   <Option
                     isActive={glazing === "Clear Ultra Low E 1.1 U-value"}
-                    onClick={() =>
-                      handleGlazing("Clear Ultra Low E 1.1 U-value", 5600)
-                    }
+                    onClick={() => {
+                      handleGlazing("Clear Ultra Low E 1.1 U-value", 5600);
+                      handleBlinds("N/a", 0);
+                    }}
                   >
                     Clear Ultra Low E 1.1 U-value
                   </Option>
@@ -1052,19 +1063,23 @@ const Draft: React.FC = () => {
                       glazing ===
                       "Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm Unit"
                     }
-                    onClick={() =>
+                    onClick={() => {
                       handleGlazing(
                         "Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm Unit",
                         8100
-                      )
-                    }
+                      );
+                      handleBlinds("N/a", 0);
+                    }}
                   >
                     Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm
                     Unit
                   </Option>
                   <Option
                     isActive={glazing === "Other"}
-                    onClick={() => handleGlazing("Other", 0)}
+                    onClick={() => {
+                      handleGlazing("Other", 0);
+                      handleBlinds("N/a", 0);
+                    }}
                   >
                     Other (POA)
                   </Option>
