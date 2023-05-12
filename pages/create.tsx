@@ -200,7 +200,8 @@ const Draft: React.FC = () => {
     const doorsPerLeaf = frameHeight < 2250 ? 395 : 425;
     const sumDoors = doorsPerLeaf * (leftDoors + rightDoors);
     const sumFrameColor = (frameColorCost / 100) * (leftDoors + rightDoors);
-    const sumAddOnSize = (frameWidth / 1000) * (addOnSizeCost / 100);
+    // const sumAddOnSize = (frameWidth / 1000) * (addOnSizeCost / 100);
+    const sumAddOnSize = 0;
     const sumAddOnPositionTop = addOnPositionTop
       ? (addOnSizeCost / 100) * (frameWidth / 1000)
       : 0;
