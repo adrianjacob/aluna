@@ -12,6 +12,12 @@ model Quote {
   id                 String  @id @default(cuid())
   reference          String
   name               String
+  deliveryOption     String?
+  address1           String?
+  address2           String?
+  town               String?
+  county             String?
+  postcode           String?
   contact            String
   email              String
   frameWidth         String?

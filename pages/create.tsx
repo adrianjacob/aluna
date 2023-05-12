@@ -19,6 +19,12 @@ const Draft: React.FC = () => {
   const [total, setTotal] = useState(0);
   const [reference, setReference] = useState("");
   const [name, setName] = useState("");
+  const [deliveryOption, setDeliveryOption] = useState("Office");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [town, setTown] = useState("");
+  const [county, setCounty] = useState("");
+  const [postcode, setPostcode] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [frameWidth, setFrameWidth] = useState(4000);
@@ -83,6 +89,12 @@ const Draft: React.FC = () => {
           const body = {
             reference,
             name,
+            deliveryOption,
+            address1,
+            address2,
+            town,
+            county,
+            postcode,
             contact,
             email,
             frameWidth,
@@ -224,7 +236,7 @@ const Draft: React.FC = () => {
 
   // SET DEFAULT LEFT DOORS
   useEffect(() => {
-    setLeftDoors(Math.floor(frameWidth / leaf.max));
+    setLeftDoors(Math.ceil(frameWidth / leaf.max));
   }, [frameWidth]);
 
   const modal = useRef();
@@ -257,6 +269,73 @@ const Draft: React.FC = () => {
                   required
                 />
               </Field>
+              <Field>
+                <Label>Delivery address*</Label>
+                <Field.Options>
+                  <Option
+                    isActive={deliveryOption === "Office"}
+                    onClick={() => setDeliveryOption("Office")}
+                  >
+                    Office
+                  </Option>
+                  <Option
+                    isActive={deliveryOption === "Custom"}
+                    onClick={() => setDeliveryOption("Custom")}
+                  >
+                    Custom
+                  </Option>
+                </Field.Options>
+              </Field>
+              {deliveryOption === "Custom" && (
+                <>
+                  <Field>
+                    <Label>Address line 1*</Label>
+                    <Input
+                      onChange={(e) => setAddress1(e.target.value)}
+                      type="text"
+                      value={address1}
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <Label>Address line 2</Label>
+                    <Input
+                      onChange={(e) => setAddress2(e.target.value)}
+                      type="text"
+                      value={address2}
+                    />
+                  </Field>
+                  <Field>
+                    <Label>Town*</Label>
+                    <Input
+                      onChange={(e) => setTown(e.target.value)}
+                      type="text"
+                      value={town}
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <Label>County*</Label>
+                    <Input
+                      onChange={(e) => setCounty(e.target.value)}
+                      type="text"
+                      value={county}
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <Label>Postcode*</Label>
+                    <Input
+                      onChange={(e) => setPostcode(e.target.value)}
+                      type="text"
+                      value={postcode}
+                      pattern="^[A-z]{1,2}[0-9]{1,2}[A-z]{0,1}\s{0,1}[0-9]{1}[A-z]{2}$"
+                      required
+                      className="small"
+                    />
+                  </Field>
+                </>
+              )}
               <Field>
                 <Label>contact number*</Label>
                 <Input
@@ -477,7 +556,7 @@ const Draft: React.FC = () => {
                 </Field.Options>
               </Field>
               <Field
-                help={`Viewed from outside. Total min = ${Math.floor(
+                help={`Viewed from outside. Total doors min = ${Math.ceil(
                   frameWidth / leaf.max
                 )} and max = ${Math.floor(frameWidth / leaf.min)}. `}
               >
@@ -486,9 +565,16 @@ const Draft: React.FC = () => {
                   <Button
                     type="button"
                     onClick={() => {
-                      setLeftDoors((leftDoors) => Math.max(+leftDoors - 1, 0)); // ensure the resulting value is not less than 0
-
-                      // leftDoorsRef.current?.focus();
+                      if (
+                        leftDoors + rightDoors <=
+                        Math.ceil(frameWidth / leaf.max)
+                      ) {
+                        return false;
+                      } else if (leftDoors !== 0) {
+                        setLeftDoors((leftDoors) => {
+                          return +leftDoors - 1;
+                        });
+                      }
                     }}
                     tabIndex={-1}
                     className="decrement"
@@ -511,29 +597,12 @@ const Draft: React.FC = () => {
                   </Button>
                   <Input
                     type="number"
+                    readOnly
                     step="1"
                     value={leftDoors}
                     required
                     ref={leftDoorsRef}
-                    min={Math.max(
-                      Math.floor(frameWidth / leaf.max) - +rightDoors,
-                      0
-                    )}
-                    max={Math.max(
-                      Math.floor(frameWidth / leaf.min) - +rightDoors,
-                      0
-                    )}
-                    onInvalid={(e) =>
-                      e.target.setCustomValidity(
-                        `Please enter a total doors value between ${Math.floor(
-                          frameWidth / leaf.max
-                        )} and ${Math.floor(
-                          frameWidth / leaf.min
-                        )}. Current total = ${+leftDoors + +rightDoors}`
-                      )
-                    }
                     onChange={(e) => {
-                      e.target.setCustomValidity("");
                       setLeftDoors(e.target.value);
                     }}
                     className="square"
@@ -541,8 +610,24 @@ const Draft: React.FC = () => {
                   <Button
                     type="button"
                     onClick={() => {
-                      setLeftDoors((leftDoors) => +leftDoors + 1);
-                      // leftDoorsRef.current?.focus();
+                      if (
+                        leftDoors + rightDoors >=
+                          Math.floor(frameWidth / leaf.min) &&
+                        rightDoors !== 0
+                      ) {
+                        setRightDoors((rightDoors) => {
+                          return +rightDoors - 1;
+                        });
+                        setLeftDoors((leftDoors) => {
+                          return +leftDoors + 1;
+                        });
+                      } else if (
+                        leftDoors < Math.floor(frameWidth / leaf.min)
+                      ) {
+                        setLeftDoors((leftDoors) => {
+                          return +leftDoors + 1;
+                        });
+                      }
                     }}
                     tabIndex={-1}
                     className="increment"
@@ -566,7 +651,7 @@ const Draft: React.FC = () => {
                 </Field.Flex>
               </Field>
               <Field
-                help={`Viewed from outside. Total min = ${Math.floor(
+                help={`Viewed from outside. Total doors min = ${Math.ceil(
                   frameWidth / leaf.max
                 )} and max = ${Math.floor(frameWidth / leaf.min)}. `}
               >
@@ -575,11 +660,16 @@ const Draft: React.FC = () => {
                   <Button
                     type="button"
                     onClick={() => {
-                      setRightDoors((rightDoors) =>
-                        Math.max(+rightDoors - 1, 0)
-                      );
-
-                      // rightDoorsRef.current?.focus();
+                      if (
+                        leftDoors + rightDoors <=
+                        Math.ceil(frameWidth / leaf.max)
+                      ) {
+                        return false;
+                      } else if (rightDoors !== 0) {
+                        setRightDoors((rightDoors) => {
+                          return +rightDoors - 1;
+                        });
+                      }
                     }}
                     tabIndex={-1}
                     className="decrement"
@@ -602,29 +692,12 @@ const Draft: React.FC = () => {
                   </Button>
                   <Input
                     type="number"
+                    readOnly
                     step="1"
                     value={rightDoors}
                     required
                     ref={rightDoorsRef}
-                    min={Math.max(
-                      Math.floor(frameWidth / leaf.max) - +leftDoors,
-                      0
-                    )}
-                    max={Math.max(
-                      Math.floor(frameWidth / leaf.min) - +leftDoors,
-                      0
-                    )}
-                    onInvalid={(e) =>
-                      e.target.setCustomValidity(
-                        `Please enter a total doors value between ${Math.floor(
-                          frameWidth / leaf.max
-                        )} and ${Math.floor(
-                          frameWidth / leaf.min
-                        )}. Current total = ${+leftDoors + +rightDoors}`
-                      )
-                    }
                     onChange={(e) => {
-                      e.target.setCustomValidity("");
                       setRightDoors(e.target.value);
                     }}
                     className="square"
@@ -632,8 +705,24 @@ const Draft: React.FC = () => {
                   <Button
                     type="button"
                     onClick={() => {
-                      setRightDoors((rightDoors) => +rightDoors + 1);
-                      // rightDoorsRef.current?.focus();
+                      if (
+                        leftDoors + rightDoors >=
+                          Math.floor(frameWidth / leaf.min) &&
+                        leftDoors !== 0
+                      ) {
+                        setLeftDoors((leftDoors) => {
+                          return +leftDoors - 1;
+                        });
+                        setRightDoors((rightDoors) => {
+                          return +rightDoors + 1;
+                        });
+                      } else if (
+                        rightDoors < Math.floor(frameWidth / leaf.min)
+                      ) {
+                        setRightDoors((rightDoors) => {
+                          return +rightDoors + 1;
+                        });
+                      }
                     }}
                     tabIndex={-1}
                     className="increment"
@@ -982,7 +1071,7 @@ const Draft: React.FC = () => {
                 </Field.Options>
               </Field>
 
-              <Field help="Max 2300mm high and Max 2sqm per panel. Only available with clear Low E glazing. Office will call to discuss track handing and colour options">
+              <Field help="Max 2300mm high and Max 2sqm per panel. Only available with clear Low E glazing. Magnet handing assumed opposite lever handle unless otherwise stated in notes below, inside view looking out.">
                 <Label>Blinds*</Label>
                 <Field.Options>
                   <Option
@@ -1035,7 +1124,7 @@ const Draft: React.FC = () => {
               </Field>
 
               <Field help="Assembled delivery is only available for bifolds up to 4800mm wide x 2200mm high. Please ensure someone is available at the delivery address to assist with offloading and fitting location is accessible for size ordered. Redelivery charges may apply.">
-                <Label>Delivery*</Label>
+                <Label>Delivery type*</Label>
                 <Field.Options>
                   {frameWidth <= 4800 && frameHeight <= 2200 && (
                     <Option
