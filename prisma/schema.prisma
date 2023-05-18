@@ -37,6 +37,8 @@ model Quote {
   internalShootbolt  String?
   glazing            String?
   blinds             String?
+  blindsColor        String?
+  blindsTrack        String?
   trickleVents       String?
   delivery           String?
   content            String?

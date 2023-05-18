@@ -6,6 +6,12 @@ import ReactMarkdown from "react-markdown";
 import Router from "next/router";
 import Layout from "../../components/Layout";
 import Panel from "../../components/Panel";
+import Preview from "../../components/Preview";
+import Line from "../../components/Line";
+import Banner from "../../components/Banner";
+import Button from "../../components/Button";
+import Badge from "../../components/Badge";
+
 import { PostProps } from "../../components/Post";
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
@@ -45,6 +51,7 @@ async function editPost(id: string): Promise<void> {
 }
 
 const Post: React.FC<PostProps> = (props) => {
+  console.log(props.leftDoors);
   const { data: session, status } = useSession();
   if (status === "loading") {
     return <div>Authenticating ...</div>;
@@ -52,26 +59,100 @@ const Post: React.FC<PostProps> = (props) => {
   const userHasValidSession = Boolean(session);
   const postBelongsToUser = session?.user?.email === props.author?.email;
   let title = props.reference;
-  if (!props.published) {
-    title = `${title} (Draft)`;
-  }
+  // if (!props.published) {
+  //   title = `${title} (Draft)`;
+  // }
 
   return (
     <Layout title={title}>
-      <Panel>
-        <h2>{title}</h2>
-        <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown children={props.content} />
-        {!props.published && userHasValidSession && postBelongsToUser && (
-          <button onClick={() => publishPost(props.id)}>Publish</button>
-        )}
-        {/* NEED TO DELETE WHEN LIVE - LEAVING IN SO EASILY MANAGE LIST */}
-        {userHasValidSession && postBelongsToUser && (
-          <button onClick={() => deletePost(props.id)}>Delete</button>
-        )}
-        {!props.published && userHasValidSession && postBelongsToUser && (
-          <button onClick={() => editPost(props.id)}>Edit</button>
-        )}
+      <Panel isPadding>
+        {/* <p>By {props?.author?.name || "Unknown author"}</p> */}
+        <Preview
+          leftDoors={props.leftDoors}
+          rightDoors={props.rightDoors}
+          frameColor={props.frameColor}
+        />
+        <div>
+          <Line>
+            <Line.Key>Type</Line.Key>
+            <Line.Value>
+              <Badge isOrdered={props.published} />
+            </Line.Value>
+          </Line>
+          {Object.entries(props).map(([key, value]) => {
+            if (
+              typeof value === "object" ||
+              key === "id" ||
+              key === "authorId"
+            ) {
+              return null;
+            }
+            if (value) {
+              return (
+                <Line key={key}>
+                  <Line.Key>
+                    {key.charAt(0).toUpperCase() +
+                      key.slice(1).replace(/[A-Z]/g, " $&")}
+                  </Line.Key>
+                  <Line.Value>
+                    {key.includes("date") && typeof value === "string"
+                      ? new Date(value).toLocaleString("en-GB", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })
+                      : key === "total"
+                      ? "£" + value
+                      : value}
+                  </Line.Value>
+                </Line>
+              );
+            }
+            return null;
+          })}
+        </div>
+
+        <Banner>
+          <Banner.Left>
+            {/* NEED TO DELETE WHEN LIVE - LEAVING IN SO EASILY MANAGE LIST */}
+            {userHasValidSession && postBelongsToUser && (
+              <Button
+                onClick={() => {
+                  const confirmed = window.confirm(
+                    "Are you sure you want to delete this quote? This action cannot be reverted"
+                  );
+                  if (confirmed) {
+                    deletePost(props.id);
+                  }
+                }}
+                variant="secondary"
+              >
+                Delete
+              </Button>
+            )}
+          </Banner.Left>
+          <Banner.Right>
+            {!props.published && userHasValidSession && postBelongsToUser && (
+              <Button onClick={() => editPost(props.id)} variant="secondary">
+                Edit
+              </Button>
+            )}
+            {!props.published && userHasValidSession && postBelongsToUser && (
+              <Button
+                onClick={() => {
+                  const confirmed = window.confirm(
+                    "By clicking 'OK', you’ve checked all the details and are happy to place the order, which will be sent to the office for manufacture. The office will send email confirmation once this is processed."
+                  );
+                  if (confirmed) {
+                    publishPost(props.id);
+                  }
+                }}
+              >
+                Publish
+              </Button>
+            )}
+          </Banner.Right>
+        </Banner>
       </Panel>
       <style jsx>{``}</style>
     </Layout>

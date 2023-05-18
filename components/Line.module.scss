@@ -1,0 +1,12 @@
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #d1d1d1;
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.value {
+  font-weight: 600;
+}

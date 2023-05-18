@@ -53,6 +53,8 @@ const Draft: React.FC = () => {
   const [glazingCost, setGlazingCost] = useState(0);
   const [blinds, setBlinds] = useState("N/a");
   const [blindsCost, setBlindsCost] = useState(0);
+  const [blindsColor, setBlindsColor] = useState("S102 White");
+  const [blindsTrack, setBlindsTrack] = useState("S102 White");
   const [trickleVents, setTrickleVents] = useState("N/a");
   const [trickleVentsCost, setTrickleVentsCost] = useState(0);
   const [delivery, setDelivery] = useState("Assembled");
@@ -114,6 +116,8 @@ const Draft: React.FC = () => {
             internalShootbolt,
             glazing,
             blinds,
+            blindsColor,
+            blindsTrack,
             trickleVents,
             delivery,
             content,
@@ -244,7 +248,7 @@ const Draft: React.FC = () => {
 
   return (
     <Layout title="New quote">
-      <Panel>
+      <Panel isPadding>
         {!session ? (
           <p>Please log in to view posts</p>
         ) : (
@@ -997,12 +1001,15 @@ const Draft: React.FC = () => {
                   >
                     Standard to match door colour
                   </Option>
-                  <Option
-                    isActive={internalShootbolt === "Black"}
-                    onClick={() => handleInternalShootbolt("Black", 0)}
-                  >
-                    Black
-                  </Option>
+                  {handleColor !== "Black" && (
+                    <Option
+                      isActive={internalShootbolt === "Black"}
+                      onClick={() => handleInternalShootbolt("Black", 0)}
+                    >
+                      Black
+                    </Option>
+                  )}
+
                   {(frameColor === "Single RAL Internal & External" ||
                     frameColor === "Dual RAL Internal & External") && (
                     <>
@@ -1092,22 +1099,188 @@ const Draft: React.FC = () => {
                 <Field.Options>
                   <Option
                     isActive={blinds === "N/a"}
-                    onClick={() => handleBlinds("N/a", 0)}
+                    onClick={() => {
+                      handleBlinds("N/a", 0);
+                      setBlindsColor("");
+                      setBlindsTrack("");
+                    }}
                   >
                     N/a
                   </Option>
                   {glazing === "Clear Low E 1.2 U-value" && (
                     <Option
                       isActive={blinds === "Integrated Blinds 1.2 U-value"}
-                      onClick={() =>
-                        handleBlinds("Integrated Blinds 1.2 U-value", 20000)
-                      }
+                      onClick={() => {
+                        handleBlinds("Integrated Blinds 1.2 U-value", 20000);
+                        setBlindsColor("S102 White");
+                        setBlindsTrack("S102 White");
+                      }}
                     >
                       Integrated Blinds 1.2 U-value
                     </Option>
                   )}
                 </Field.Options>
               </Field>
+
+              {blinds === "Integrated Blinds 1.2 U-value" && (
+                <>
+                  <Field>
+                    <Label>Blinds colour*</Label>
+                    <Field.Options>
+                      <Option
+                        isActive={blindsColor === "S102 White"}
+                        onClick={() => {
+                          setBlindsColor("S102 White");
+                          setBlindsTrack("S102 White");
+                        }}
+                      >
+                        S102 White
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S106 Yellow"}
+                        onClick={() => {
+                          setBlindsColor("S106 Yellow");
+                          setBlindsTrack("S157 Silver");
+                        }}
+                        style={{ background: "#f9e7a7" }}
+                      >
+                        S106 Yellow
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S125 Beige"}
+                        onClick={() => {
+                          setBlindsColor("S125 Beige");
+                          setBlindsTrack("S149 Cream");
+                        }}
+                        style={{ background: "#efdcd1" }}
+                      >
+                        S125 Beige
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S130 Green"}
+                        onClick={() => {
+                          setBlindsColor("S130 Green");
+                          setBlindsTrack("S157 Silver");
+                        }}
+                        style={{ background: "#c9dfd2" }}
+                      >
+                        S130 Green
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S142 Light Blue"}
+                        onClick={() => {
+                          setBlindsColor("S142 Light Blue");
+                          setBlindsTrack("S157 Silver");
+                        }}
+                        style={{ background: "#d5edf7" }}
+                      >
+                        S142 Light Blue
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S149 Cream"}
+                        onClick={() => {
+                          setBlindsColor("S149 Cream");
+                          setBlindsTrack("S149 Cream");
+                        }}
+                        style={{ background: "#f9f0e5" }}
+                      >
+                        S149 Cream
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S155 Grey"}
+                        onClick={() => {
+                          setBlindsColor("S155 Grey");
+                          setBlindsTrack("S157 Silver");
+                        }}
+                        style={{ background: "#ebebeb" }}
+                      >
+                        S155 Grey
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S156 Metallic Grey"}
+                        onClick={() => {
+                          setBlindsColor("S156 Metallic Grey");
+                          setBlindsTrack("S157 Silver");
+                        }}
+                        style={{ background: "#bdbdbd" }}
+                      >
+                        S156 Metallic Grey
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S157 Silver"}
+                        onClick={() => {
+                          setBlindsColor("S157 Silver");
+                          setBlindsTrack("S157 Silver");
+                        }}
+                        style={{ background: "#e0e0e0" }}
+                      >
+                        S157 Silver
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S159 Anthracite"}
+                        onClick={() => {
+                          setBlindsColor("S159 Anthracite");
+                          setBlindsTrack("S159 Anthracite");
+                        }}
+                        style={{ background: "#676767", color: "#FFF" }}
+                      >
+                        S159 Anthracite
+                      </Option>
+                      <Option
+                        isActive={blindsColor === "S160 Black"}
+                        onClick={() => {
+                          setBlindsColor("S160 Black");
+                          setBlindsTrack("S160 Black");
+                        }}
+                        style={{ background: "#0a0a0a", color: "#FFF" }}
+                      >
+                        S160 Black
+                      </Option>
+                    </Field.Options>
+                  </Field>
+                  <Field help="Best complimentary colour is preselected when chhosing blinds colour. You can override this.">
+                    <Label>Track colour*</Label>
+                    <Field.Options>
+                      <Option
+                        isActive={blindsTrack === "S102 White"}
+                        onClick={() => setBlindsTrack("S102 White")}
+                      >
+                        S102 White
+                      </Option>
+
+                      <Option
+                        isActive={blindsTrack === "S149 Cream"}
+                        onClick={() => setBlindsTrack("S149 Cream")}
+                        style={{ background: "#f9f0e5" }}
+                      >
+                        S149 Cream
+                      </Option>
+
+                      <Option
+                        isActive={blindsTrack === "S157 Silver"}
+                        onClick={() => setBlindsTrack("S157 Silver")}
+                        style={{ background: "#e0e0e0" }}
+                      >
+                        S157 Silver
+                      </Option>
+                      <Option
+                        isActive={blindsTrack === "S159 Anthracite"}
+                        onClick={() => setBlindsTrack("S159 Anthracite")}
+                        style={{ background: "#676767", color: "#FFF" }}
+                      >
+                        S159 Anthracite
+                      </Option>
+                      <Option
+                        isActive={blindsTrack === "S160 Black"}
+                        onClick={() => setBlindsTrack("S160 Black")}
+                        style={{ background: "#0a0a0a", color: "#FFF" }}
+                      >
+                        S160 Black
+                      </Option>
+                    </Field.Options>
+                  </Field>
+                </>
+              )}
 
               <Field help="Each trickle vent provides up to 2500mm² of exhaust air">
                 <Label>Trickle vents*</Label>
@@ -1208,11 +1381,6 @@ const Draft: React.FC = () => {
           </>
         )}
       </Panel>
-      <style jsx>{`
-        form {
-          padding: 20px;
-        }
-      `}</style>
     </Layout>
   );
 };

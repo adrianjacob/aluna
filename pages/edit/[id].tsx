@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { GetServerSideProps } from "next";
-import ReactMarkdown from "react-markdown";
 import Router from "next/router";
 import Layout from "../../components/Layout";
 import Panel from "../../components/Panel";
@@ -29,6 +28,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 const Post: React.FC<PostProps> = (props) => {
   // const [title, setTitle] = useState(props.reference);
   const [reference, setReference] = useState(props.reference);
+  const [email, setEmail] = useState(props.email);
 
   const { data: session, status } = useSession();
   if (status === "loading") {
@@ -45,21 +45,31 @@ const Post: React.FC<PostProps> = (props) => {
     await fetch(`/api/edit/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ reference }),
+      body: JSON.stringify({ reference, email }),
     });
     await Router.push("/");
   }
 
   return (
-    <Layout>
+    <Layout title="Edit quote">
       <Panel>
-        {/* <h2>{title}</h2> */}
-        <input
-          autoFocus
-          onChange={(e) => setReference(e.target.value)}
-          type="text"
-          value={reference}
-        />
+        <h2>Work in progress...</h2>
+        <div>
+          <input
+            autoFocus
+            onChange={(e) => setReference(e.target.value)}
+            type="text"
+            value={reference}
+          />
+        </div>
+        <div>
+          <input
+            autoFocus
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            value={email}
+          />
+        </div>
         {userHasValidSession && postBelongsToUser && (
           <button onClick={() => savePost(props.id)}>Save</button>
         )}

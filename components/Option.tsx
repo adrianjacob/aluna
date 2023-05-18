@@ -9,12 +9,18 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick: () => void;
 };
 
-const Option: React.FC<Props> = ({ children, isActive = false, onClick }) => {
+const Option: React.FC<Props> = ({
+  children,
+  isActive = false,
+  onClick,
+  ...props
+}) => {
   return (
     <button
       className={cx("option", isActive && "active")}
       type="button"
       onClick={onClick}
+      {...props}
     >
       {children}
     </button>

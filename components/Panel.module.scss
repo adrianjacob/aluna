@@ -4,8 +4,10 @@
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   position: relative;
-  padding-bottom: 81px;
+  padding-bottom: 101px !important;
   overflow: hidden;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 .padding {

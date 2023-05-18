@@ -25,6 +25,9 @@ export type PostProps = {
   datePublished: string;
   dateModified: string;
   total: string;
+  leftDoors: number;
+  rightDoors: number;
+  frameColor: string;
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
