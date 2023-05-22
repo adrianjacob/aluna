@@ -13,7 +13,7 @@ export default function Login() {
   }
 
   return (
-    <Layout title="Welcome to Aluna">
+    <Layout title="Welcome to UK Doors">
       <Panel isPadding>
         <div className="asset">
           <Image src="/preview.jpeg" alt="Welcome" width="1000" height="455" />

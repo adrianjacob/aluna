@@ -19,6 +19,7 @@ export type PostProps = {
   author: {
     name: string;
     email: string;
+    image: string;
   } | null;
   content: string;
   published: boolean;
@@ -32,13 +33,23 @@ export type PostProps = {
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
+  console.log(post);
   return (
     <div
       className={cx("post")}
       onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}
     >
       <div className={cx("left")}>
-        <div className={cx("circle")}>XX</div>
+        <div className={cx("circle")}>
+          {post.author.image && (
+            <img
+              src={post.author.image}
+              width="36"
+              height="36"
+              alt={post.author.name}
+            />
+          )}
+        </div>
         <div>
           <div className={cx("ref")}>{post.reference}</div>
           <div className={cx("cost")}>

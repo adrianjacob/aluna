@@ -1238,7 +1238,7 @@ const Draft: React.FC = () => {
                       </Option>
                     </Field.Options>
                   </Field>
-                  <Field help="Best complimentary colour is preselected when chhosing blinds colour. You can override this.">
+                  <Field help="Best complimentary track colour is preselected when choosing the blinds colour. You can override this.">
                     <Label>Track colour*</Label>
                     <Field.Options>
                       <Option

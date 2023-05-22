@@ -19,7 +19,7 @@ export const getServerSideProps: GetStaticProps = async () => {
     },
     include: {
       author: {
-        select: { name: true },
+        select: { name: true, image: true },
       },
     },
   });
