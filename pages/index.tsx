@@ -60,11 +60,15 @@ const Blog: React.FC<Props> = (props) => {
           <p>Please log in to view posts</p>
         ) : (
           <>
-            {props.feed.map((post) => (
-              <div key={post.id} className="post">
-                <Post post={post} />
-              </div>
-            ))}
+            {props.feed.length > 0 ? (
+              props.feed.map((post) => (
+                <div key={post.id} className="post">
+                  <Post post={post} />
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
             <Banner>
               <Banner.Right>
                 <Link href="/create">

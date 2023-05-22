@@ -47,6 +47,10 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
               width="36"
               height="36"
               alt={post.author.name}
+              onError={(e) => {
+                (e.target as HTMLImageElement).onerror = null;
+                (e.target as HTMLImageElement).style.display = "none"; // hide the image if there's an error
+              }}
             />
           )}
         </div>

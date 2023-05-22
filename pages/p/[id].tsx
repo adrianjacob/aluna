@@ -115,8 +115,8 @@ const Post: React.FC<PostProps> = (props) => {
         <Banner>
           <Banner.Left>
             {/* NEED TO DELETE WHEN LIVE - LEAVING IN SO EASILY MANAGE LIST */}
-            {/* {userHasValidSession && postBelongsToUser && ( */}
-            {!props.published && userHasValidSession && (
+            {/* {userHasValidSession && ( */}
+            {!props.published && userHasValidSession && postBelongsToUser && (
               <Button
                 onClick={() => {
                   const confirmed = window.confirm(
