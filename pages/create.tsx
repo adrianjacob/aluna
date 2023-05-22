@@ -53,8 +53,8 @@ const Draft: React.FC = () => {
   const [glazingCost, setGlazingCost] = useState(0);
   const [blinds, setBlinds] = useState("N/a");
   const [blindsCost, setBlindsCost] = useState(0);
-  const [blindsColor, setBlindsColor] = useState("S102 White");
-  const [blindsTrack, setBlindsTrack] = useState("S102 White");
+  const [blindsColor, setBlindsColor] = useState("");
+  const [blindsTrack, setBlindsTrack] = useState("");
   const [trickleVents, setTrickleVents] = useState("N/a");
   const [trickleVentsCost, setTrickleVentsCost] = useState(0);
   const [delivery, setDelivery] = useState("Assembled");
