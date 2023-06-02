@@ -9,6 +9,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   href?: string;
   variant?: string;
   className?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button = forwardRef<HTMLButtonElement, Props>(

@@ -4,6 +4,26 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import Panel from "../components/Panel";
+
+import Reference from "../config/Reference";
+import Name from "../config/Name";
+import DeliveryAddress from "../config/DeliveryAddress";
+import AddressLine1 from "../config/AddressLine1";
+import AddressLine2 from "../config/AddressLine2";
+import Town from "../config/Town";
+import County from "../config/County";
+import Postcode from "../config/Postcode";
+import ContactNumber from "../config/ContactNumber";
+import Email from "../config/Email";
+import FrameWidth from "../config/FrameWidth";
+import FrameHeight from "../config/FrameHeight";
+import Threshold from "../config/Threshold";
+import Cill from "../config/Cill";
+import DoorsLeft from "../config/DoorsLeft";
+import DoorsRight from "../config/DoorsRight";
+import OpeningDirection from "../config/OpeningDirection";
+import TrafficDoorSide from "../config/TrafficDoorSide";
+
 import Input from "../components/Input";
 import Field from "../components/Field";
 import Label from "../components/Label";
@@ -145,11 +165,6 @@ const Draft: React.FC = () => {
     }
   };
 
-  const handleCillSelect = (option: string, cost: number) => {
-    setCill(option);
-    setCillCost(cost);
-  };
-
   const handleFrameColor = (option: string, cost: number) => {
     setFrameColor(option);
     setFrameColorCost(cost);
@@ -254,551 +269,48 @@ const Draft: React.FC = () => {
         ) : (
           <>
             <form onSubmit={submitData}>
-              <Field>
-                <Label>reference*</Label>
-                <Input
-                  autoFocus
-                  onChange={(e) => setReference(e.target.value)}
-                  type="text"
-                  value={reference}
-                  required
-                  className="uppercase"
-                />
-              </Field>
-              <Field>
-                <Label>name*</Label>
-                <Input
-                  onChange={(e) => setName(e.target.value)}
-                  type="text"
-                  value={name}
-                  required
-                />
-              </Field>
-              <Field>
-                <Label>Delivery address*</Label>
-                <Field.Options>
-                  <Option
-                    isActive={deliveryOption === "Office"}
-                    onClick={() => setDeliveryOption("Office")}
-                  >
-                    Office
-                  </Option>
-                  <Option
-                    isActive={deliveryOption === "Custom"}
-                    onClick={() => setDeliveryOption("Custom")}
-                  >
-                    Custom
-                  </Option>
-                </Field.Options>
-              </Field>
+              <Reference {...{ reference, setReference }} />
+              <Name {...{ name, setName }} />
+              <DeliveryAddress {...{ deliveryOption, setDeliveryOption }} />
               {deliveryOption === "Custom" && (
                 <>
-                  <Field>
-                    <Label>Address line 1*</Label>
-                    <Input
-                      onChange={(e) => setAddress1(e.target.value)}
-                      type="text"
-                      value={address1}
-                      required
-                    />
-                  </Field>
-                  <Field>
-                    <Label>Address line 2</Label>
-                    <Input
-                      onChange={(e) => setAddress2(e.target.value)}
-                      type="text"
-                      value={address2}
-                    />
-                  </Field>
-                  <Field>
-                    <Label>Town*</Label>
-                    <Input
-                      onChange={(e) => setTown(e.target.value)}
-                      type="text"
-                      value={town}
-                      required
-                    />
-                  </Field>
-                  <Field>
-                    <Label>County*</Label>
-                    <Input
-                      onChange={(e) => setCounty(e.target.value)}
-                      type="text"
-                      value={county}
-                      required
-                    />
-                  </Field>
-                  <Field>
-                    <Label>Postcode*</Label>
-                    <Input
-                      onChange={(e) => setPostcode(e.target.value)}
-                      type="text"
-                      value={postcode}
-                      pattern="^[A-z]{1,2}[0-9]{1,2}[A-z]{0,1}\s{0,1}[0-9]{1}[A-z]{2}$"
-                      required
-                      className="small"
-                    />
-                  </Field>
+                  <AddressLine1 {...{ address1, setAddress1 }} />
+                  <AddressLine2 {...{ address2, setAddress2 }} />
+                  <Town {...{ town, setTown }} />
+                  <County {...{ county, setCounty }} />
+                  <Postcode {...{ postcode, setPostcode }} />
                 </>
               )}
-              <Field>
-                <Label>contact number*</Label>
-                <Input
-                  onChange={(e) => setContact(e.target.value)}
-                  type="number"
-                  value={contact}
-                  required
-                />
-              </Field>
-              <Field>
-                <Label>email*</Label>
-                <Input
-                  onChange={(e) => setEmail(e.target.value)}
-                  type="email"
-                  value={email}
-                  required
-                />
-              </Field>
-              <Field help={`Min ${leaf.min}mm - Max ${leaf.max}mm sash width`}>
-                <Label>Overall Frame Width (MM)*</Label>
-                <Field.Flex>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setFrameWidth((frameWidth) => +frameWidth - 5);
-                      // frameWidthRef.current?.focus();
-                    }}
-                    tabIndex={-1}
-                    className="decrement"
-                    variant="tertiary"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="2"
-                      fill="none"
-                    >
-                      <path
-                        stroke="#001A72"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M1 1h10"
-                      />
-                    </svg>
-                  </Button>
-                  <Input
-                    onChange={(e) => setFrameWidth(e.target.value)}
-                    type="number"
-                    step="5"
-                    value={frameWidth}
-                    pattern="[0-9]*"
-                    required
-                    ref={frameWidthRef}
-                    className="square"
-                    min="0"
-                  />
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setFrameWidth((frameWidth) => +frameWidth + 5);
-                      // frameWidthRef.current?.focus();
-                    }}
-                    tabIndex={-1}
-                    className="increment"
-                    variant="tertiary"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                    >
-                      <path
-                        stroke="#001A72"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M1 9h16M9 1v16"
-                      />
-                    </svg>
-                  </Button>
-                </Field.Flex>
-              </Field>
-              <Field help="Max 2500mm - higher sizes available upon request">
-                <Label>Overall Frame Height (MM)*</Label>
-                <Field.Flex>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setFrameHeight((frameHeight) => +frameHeight - 5);
-                      // frameHeightRef.current?.focus();
-                    }}
-                    tabIndex={-1}
-                    className="decrement"
-                    variant="tertiary"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="2"
-                      fill="none"
-                    >
-                      <path
-                        stroke="#001A72"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M1 1h10"
-                      />
-                    </svg>
-                  </Button>
-                  <Input
-                    onChange={(e) => setFrameHeight(e.target.value)}
-                    type="number"
-                    step="5"
-                    value={frameHeight}
-                    pattern="[0-9]*"
-                    required
-                    ref={frameHeightRef}
-                    className="square"
-                    min="0"
-                    max="2500"
-                  />
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setFrameHeight((frameHeight) =>
-                        Math.min(+frameHeight + 5, 2500)
-                      );
-                      // frameHeightRef.current?.focus();
-                    }}
-                    tabIndex={-1}
-                    className="increment"
-                    variant="tertiary"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                    >
-                      <path
-                        stroke="#001A72"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M1 9h16M9 1v16"
-                      />
-                    </svg>
-                  </Button>
-                </Field.Flex>
-              </Field>
-              <Field>
-                <Label>Threshold*</Label>
-                <Field.Options>
-                  <Option
-                    isActive={threshold === "Standard (55mm)"}
-                    onClick={() => setThreshold("Standard (55mm)")}
-                  >
-                    Standard
-                    <br />
-                    (55mm)
-                  </Option>
-                  <Option
-                    isActive={threshold === "Low (20mm)"}
-                    onClick={() => setThreshold("Low (20mm)")}
-                  >
-                    Low
-                    <br />
-                    (20mm)
-                  </Option>
-                  <Option
-                    isActive={threshold === "Low w/rebate (40mm)"}
-                    onClick={() => setThreshold("Low w/rebate (40mm)")}
-                  >
-                    Low w/rebate
-                    <br />
-                    (40mm)
-                  </Option>
-                </Field.Options>
-              </Field>
-              <Field>
-                <Label>Cill*</Label>
-                <Field.Options>
-                  <Option
-                    isActive={cill === "Standard (150mm)"}
-                    onClick={() => handleCillSelect("Standard (150mm)", 1800)}
-                  >
-                    Standard
-                    <br />
-                    (150mm)
-                  </Option>
-                  <Option
-                    isActive={cill === "None"}
-                    onClick={() => handleCillSelect("None", 0)}
-                  >
-                    None
-                  </Option>
-                  <Option
-                    isActive={cill === "90mm"}
-                    onClick={() => handleCillSelect("90mm", 1650)}
-                  >
-                    90mm
-                  </Option>
-                  <Option
-                    isActive={cill === "190mm"}
-                    onClick={() => handleCillSelect("190mm", 2100)}
-                  >
-                    190mm
-                  </Option>
-                  <Option
-                    isActive={cill === "230mm"}
-                    onClick={() => handleCillSelect("230mm", 2500)}
-                  >
-                    230mm
-                  </Option>
-                </Field.Options>
-              </Field>
-              <Field
-                help={`Viewed from outside. Total doors min = ${Math.ceil(
-                  frameWidth / leaf.max
-                )} and max = ${Math.floor(frameWidth / leaf.min)}. `}
-              >
-                <Label>Number of left hand doors*</Label>
-                <Field.Flex>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      if (
-                        leftDoors + rightDoors <=
-                        Math.ceil(frameWidth / leaf.max)
-                      ) {
-                        return false;
-                      } else if (leftDoors !== 0) {
-                        setLeftDoors((leftDoors) => {
-                          return +leftDoors - 1;
-                        });
-                      }
-                    }}
-                    tabIndex={-1}
-                    className="decrement"
-                    variant="tertiary"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="2"
-                      fill="none"
-                    >
-                      <path
-                        stroke="#001A72"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M1 1h10"
-                      />
-                    </svg>
-                  </Button>
-                  <Input
-                    type="number"
-                    readOnly
-                    step="1"
-                    value={leftDoors}
-                    required
-                    ref={leftDoorsRef}
-                    onChange={(e) => {
-                      setLeftDoors(e.target.value);
-                    }}
-                    className="square"
-                  />
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      if (
-                        leftDoors + rightDoors >=
-                          Math.floor(frameWidth / leaf.min) &&
-                        rightDoors !== 0
-                      ) {
-                        setRightDoors((rightDoors) => {
-                          return +rightDoors - 1;
-                        });
-                        setLeftDoors((leftDoors) => {
-                          return +leftDoors + 1;
-                        });
-                      } else if (
-                        leftDoors < Math.floor(frameWidth / leaf.min)
-                      ) {
-                        setLeftDoors((leftDoors) => {
-                          return +leftDoors + 1;
-                        });
-                      }
-                    }}
-                    tabIndex={-1}
-                    className="increment"
-                    variant="tertiary"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                    >
-                      <path
-                        stroke="#001A72"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M1 9h16M9 1v16"
-                      />
-                    </svg>
-                  </Button>
-                </Field.Flex>
-              </Field>
-              <Field
-                help={`Viewed from outside. Total doors min = ${Math.ceil(
-                  frameWidth / leaf.max
-                )} and max = ${Math.floor(frameWidth / leaf.min)}. `}
-              >
-                <Label>Number of right hand doors*</Label>
-                <Field.Flex>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      if (
-                        leftDoors + rightDoors <=
-                        Math.ceil(frameWidth / leaf.max)
-                      ) {
-                        return false;
-                      } else if (rightDoors !== 0) {
-                        setRightDoors((rightDoors) => {
-                          return +rightDoors - 1;
-                        });
-                      }
-                    }}
-                    tabIndex={-1}
-                    className="decrement"
-                    variant="tertiary"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="2"
-                      fill="none"
-                    >
-                      <path
-                        stroke="#001A72"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M1 1h10"
-                      />
-                    </svg>
-                  </Button>
-                  <Input
-                    type="number"
-                    readOnly
-                    step="1"
-                    value={rightDoors}
-                    required
-                    ref={rightDoorsRef}
-                    onChange={(e) => {
-                      setRightDoors(e.target.value);
-                    }}
-                    className="square"
-                  />
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      if (
-                        leftDoors + rightDoors >=
-                          Math.floor(frameWidth / leaf.min) &&
-                        leftDoors !== 0
-                      ) {
-                        setLeftDoors((leftDoors) => {
-                          return +leftDoors - 1;
-                        });
-                        setRightDoors((rightDoors) => {
-                          return +rightDoors + 1;
-                        });
-                      } else if (
-                        rightDoors < Math.floor(frameWidth / leaf.min)
-                      ) {
-                        setRightDoors((rightDoors) => {
-                          return +rightDoors + 1;
-                        });
-                      }
-                    }}
-                    tabIndex={-1}
-                    className="increment"
-                    variant="tertiary"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                    >
-                      <path
-                        stroke="#001A72"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M1 9h16M9 1v16"
-                      />
-                    </svg>
-                  </Button>
-                </Field.Flex>
-              </Field>
-
-              <Field help="Viewed from outside">
-                <Label>Opening direction*</Label>
-                <Field.Options>
-                  <Option
-                    isActive={openingDirection === "Out"}
-                    onClick={() => setOpeningDirection("Out")}
-                  >
-                    Out
-                  </Option>
-                  <Option
-                    isActive={openingDirection === "In"}
-                    onClick={() => {
-                      const confirmed = window.confirm(
-                        "Note: Not a popular option and the doors could clash with internal furniture."
-                      );
-                      if (confirmed) {
-                        setOpeningDirection("In");
-                      }
-                    }}
-                  >
-                    In
-                  </Option>
-                </Field.Options>
-              </Field>
-
-              <Field help="Viewed from outside">
-                <Label>Master / traffic door side*</Label>
-                <Field.Options>
-                  <Option
-                    isActive={trafficDoorSide === "Left"}
-                    onClick={() => setTrafficDoorSIde("Left")}
-                  >
-                    Left
-                  </Option>
-                  <Option
-                    isActive={trafficDoorSide === "Right"}
-                    onClick={() => setTrafficDoorSIde("Right")}
-                  >
-                    Right
-                  </Option>
-                  <Option
-                    isActive={trafficDoorSide === "N/A"}
-                    onClick={() => setTrafficDoorSIde("N/A")}
-                  >
-                    N/A
-                  </Option>
-                </Field.Options>
-              </Field>
+              <ContactNumber {...{ contact, setContact }} />
+              <Email {...{ email, setEmail }} />
+              <FrameWidth {...{ frameWidth, setFrameWidth, leaf }} />
+              <FrameHeight {...{ frameHeight, setFrameHeight, leaf }} />
+              <Threshold {...{ threshold, setThreshold }} />
+              <Cill {...{ cill, setCill, setCillCost }} />
+              <DoorsLeft
+                {...{
+                  leftDoors,
+                  setLeftDoors,
+                  rightDoors,
+                  setRightDoors,
+                  frameWidth,
+                  leaf,
+                }}
+              />
+              <DoorsRight
+                {...{
+                  rightDoors,
+                  setRightDoors,
+                  leftDoors,
+                  setLeftDoors,
+                  frameWidth,
+                  leaf,
+                }}
+              />
+              <OpeningDirection
+                {...{ openingDirection, setOpeningDirection }}
+              />
+              <TrafficDoorSide {...{ trafficDoorSide, setTrafficDoorSIde }} />
 
               <Field>
                 <Label>Frame colour*</Label>
@@ -879,7 +391,6 @@ const Draft: React.FC = () => {
                   </Option>
                 </Field.Options>
               </Field>
-
               <Field help="Included in the overall size of the bifold">
                 <Label>Add-on size*</Label>
                 <Field.Options>
@@ -908,7 +419,6 @@ const Draft: React.FC = () => {
                   </Option>
                 </Field.Options>
               </Field>
-
               {addOnSize !== "None" && (
                 <Field help="Select all that apply">
                   <Label>Add-on position*</Label>
@@ -934,7 +444,6 @@ const Draft: React.FC = () => {
                   </Field.Options>
                 </Field>
               )}
-
               <Field>
                 <Label>Handle colour*</Label>
                 <Field.Options>
@@ -984,7 +493,6 @@ const Draft: React.FC = () => {
                   )}
                 </Field.Options>
               </Field>
-
               <Field>
                 <Label>Internal shootbolt handle colour*</Label>
                 <Field.Options>
@@ -1036,7 +544,6 @@ const Draft: React.FC = () => {
                   )}
                 </Field.Options>
               </Field>
-
               <Field help="28mm double glazing units">
                 <Label>Glazing*</Label>
                 <Field.Options>
@@ -1093,7 +600,6 @@ const Draft: React.FC = () => {
                   </Option>
                 </Field.Options>
               </Field>
-
               <Field help="Max 2300mm high and Max 2sqm per panel. Only available with clear Low E glazing. Magnet handing assumed opposite lever handle unless otherwise stated in notes below, inside view looking out.">
                 <Label>Blinds*</Label>
                 <Field.Options>
@@ -1121,7 +627,6 @@ const Draft: React.FC = () => {
                   )}
                 </Field.Options>
               </Field>
-
               {blinds === "Integrated Blinds 1.2 U-value" && (
                 <>
                   <Field>
@@ -1281,7 +786,6 @@ const Draft: React.FC = () => {
                   </Field>
                 </>
               )}
-
               <Field help="Each trickle vent provides up to 2500mm² of exhaust air">
                 <Label>Trickle vents*</Label>
                 <Field.Options>
@@ -1311,7 +815,6 @@ const Draft: React.FC = () => {
                   </Option>
                 </Field.Options>
               </Field>
-
               <Field help="Assembled delivery is only available for bifolds up to 4800mm wide x 2200mm high. Please ensure someone is available at the delivery address to assist with offloading and fitting location is accessible for size ordered. Redelivery charges may apply.">
                 <Label>Delivery type*</Label>
                 <Field.Options>
@@ -1332,7 +835,6 @@ const Draft: React.FC = () => {
                   </Option>
                 </Field.Options>
               </Field>
-
               <Field>
                 <Label>Notes</Label>
                 <Input
@@ -1341,7 +843,6 @@ const Draft: React.FC = () => {
                   isTextArea={true}
                 />
               </Field>
-
               <Field>
                 <Label>Preview</Label>
                 <Preview
@@ -1350,7 +851,6 @@ const Draft: React.FC = () => {
                   frameColor={frameColor}
                 />
               </Field>
-
               <Banner>
                 <Banner.Left>
                   <Button

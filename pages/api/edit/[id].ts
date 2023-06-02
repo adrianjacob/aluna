@@ -3,9 +3,6 @@ import { utcToZonedTime, format } from "date-fns-tz";
 
 // PUT /api/edit/:id
 export default async function handle(req, res) {
-  const { reference, email, frameWidth, frameHeight, threshold, cill } =
-    req.body;
-
   const currentDate = new Date();
   const britishTimeZone = "Europe/London";
   const britishTime = utcToZonedTime(currentDate, britishTimeZone);
@@ -13,10 +10,12 @@ export default async function handle(req, res) {
     timeZone: britishTimeZone,
   });
 
+  const data = { ...req.body, dateModified: britishTimeISO };
+
   const postId = req.query.id;
   const post = await prisma.quote.update({
     where: { id: postId },
-    data: { reference: reference, email: email, dateModified: britishTimeISO },
+    data,
   });
 
   console.log(post)

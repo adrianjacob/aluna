@@ -5,6 +5,10 @@ import { GetServerSideProps } from "next";
 import Router from "next/router";
 import Layout from "../../components/Layout";
 import Panel from "../../components/Panel";
+import Reference from "../../config/Reference";
+import Name from "../../config/Name";
+import ContactNumber from "../../config/ContactNumber";
+import Email from "../../config/Email";
 import { PostProps } from "../../components/Post";
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
@@ -26,8 +30,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const Post: React.FC<PostProps> = (props) => {
-  // const [title, setTitle] = useState(props.reference);
   const [reference, setReference] = useState(props.reference);
+  const [name, setName] = useState(props.name);
+  const [contact, setContact] = useState(props.contact);
   const [email, setEmail] = useState(props.email);
 
   const { data: session, status } = useSession();
@@ -45,31 +50,19 @@ const Post: React.FC<PostProps> = (props) => {
     await fetch(`/api/edit/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ reference, email }),
+      body: JSON.stringify({ reference, name, contact, email }),
     });
     await Router.push("/");
   }
 
   return (
     <Layout title="Edit quote">
-      <Panel>
-        <h2>Work in progress...</h2>
-        <div>
-          <input
-            autoFocus
-            onChange={(e) => setReference(e.target.value)}
-            type="text"
-            value={reference}
-          />
-        </div>
-        <div>
-          <input
-            autoFocus
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            value={email}
-          />
-        </div>
+      <Panel isPadding>
+        <Reference {...{ reference, setReference }} />
+        <Name {...{ name, setName }} />
+        <ContactNumber {...{ contact, setContact }} />
+        <Email {...{ email, setEmail }} />
+
         {userHasValidSession && postBelongsToUser && (
           <button onClick={() => savePost(props.id)}>Save</button>
         )}
