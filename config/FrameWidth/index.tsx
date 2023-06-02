@@ -36,9 +36,9 @@ const Config: React.FC<Props> = ({ frameWidth, setFrameWidth, leaf }) => {
           >
             <path
               stroke="#001A72"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
               d="M1 1h10"
             />
           </svg>
@@ -72,9 +72,9 @@ const Config: React.FC<Props> = ({ frameWidth, setFrameWidth, leaf }) => {
           >
             <path
               stroke="#001A72"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
               d="M1 9h16M9 1v16"
             />
           </svg>

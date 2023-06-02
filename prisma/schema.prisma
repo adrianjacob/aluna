@@ -9,7 +9,7 @@ generator client {
 }
 
 model Quote {
-  id                 String  @id @default(cuid())
+  id                 String   @id @default(cuid())
   reference          String
   name               String
   deliveryOption     String?
@@ -20,19 +20,19 @@ model Quote {
   postcode           String?
   contact            String
   email              String
-  frameWidth         String?
-  frameHeight        String?
+  frameWidth         Int?
+  frameHeight        Int?
   threshold          String?
   cill               String?
-  leftDoors          String?
-  rightDoors         String?
+  leftDoors          Int?
+  rightDoors         Int?
   openingDirection   String?
   trafficDoorSide    String?
   frameColor         String?
   addOnSize          String?
-  addOnPositionTop   String?
-  addOnPositionLeft  String?
-  addOnPositionRight String?
+  addOnPositionTop   Boolean?
+  addOnPositionLeft  Boolean?
+  addOnPositionRight Boolean?
   handleColor        String?
   internalShootbolt  String?
   glazing            String?
@@ -42,12 +42,12 @@ model Quote {
   trickleVents       String?
   delivery           String?
   content            String?
-  published          Boolean @default(false)
-  author             User?   @relation(fields: [authorId], references: [id])
+  published          Boolean  @default(false)
+  author             User?    @relation(fields: [authorId], references: [id])
   authorId           String?
   datePublished      String // @default(now()) doesnt work for british time - using logic in code using date-fns-tz - also saving as string as issue with BST if using DateTime
   dateModified       String // @updatedAt
-  total              String?
+  total              Decimal? @default(0)
 }
 
 model Account {

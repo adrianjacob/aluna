@@ -27,8 +27,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
     },
   });
+
+  // Convert the total property of the post to a string
+  const postWithTotalAsString = {
+    ...post,
+    total: post.total.toString(),
+  };
+
   return {
-    props: post,
+    props: postWithTotalAsString,
   };
 };
 

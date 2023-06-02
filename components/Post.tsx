@@ -85,16 +85,6 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
           />
         </svg>
       </div>
-
-      {/* <h2>{post.reference}</h2>
-      <h3>Order = {post.published.toString()}</h3>
-      <small>By {authorName}</small>
-      <div>Frame width: {post.frameWidth}</div>
-      <div>Frame height: {post.frameHeight}</div>
-      <div>Threshold: {post.threshold}</div>
-      <div>Cill: {post.cill}</div>
-      <div>Published: {post.datePublished}</div>
-      <div>Modified: {post.dateModified}</div> */}
     </div>
   );
 };

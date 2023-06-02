@@ -52,6 +52,8 @@ export default async function handle(req, res) {
     timeZone: britishTimeZone,
   });
 
+  const data = { ...req.body, dateModified: britishTimeISO };
+
   const result = await prisma.quote.create({
     data: {
       reference: reference,
@@ -64,19 +66,19 @@ export default async function handle(req, res) {
       postcode: postcode,
       contact: contact,
       email: email,
-      frameWidth: frameWidth.toString(),
-      frameHeight: frameHeight.toString(),
+      frameWidth: frameWidth,
+      frameHeight: frameHeight,
       threshold: threshold,
       cill: cill,
-      leftDoors: leftDoors.toString(),
-      rightDoors: rightDoors.toString(),
+      leftDoors: leftDoors,
+      rightDoors: rightDoors,
       openingDirection: openingDirection,
       trafficDoorSide: trafficDoorSide,
       frameColor: frameColor,
       addOnSize: addOnSize,
-      addOnPositionTop: addOnPositionTop.toString(),
-      addOnPositionLeft: addOnPositionLeft.toString(),
-      addOnPositionRight: addOnPositionRight.toString(),
+      addOnPositionTop: addOnPositionTop,
+      addOnPositionLeft: addOnPositionLeft,
+      addOnPositionRight: addOnPositionRight,
       handleColor: handleColor,
       internalShootbolt: internalShootbolt,
       glazing: glazing,
@@ -90,10 +92,7 @@ export default async function handle(req, res) {
       datePublished: britishTimeISO,
       dateModified: britishTimeISO,
       published: published,
-      total: total.toLocaleString('en-GB', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }),
+      total: total,
     },
   });
   console.log(result);

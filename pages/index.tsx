@@ -24,8 +24,13 @@ export const getServerSideProps: GetStaticProps = async () => {
     },
   });
 
+  const feedWithTotalAsString = feed.map((quote) => ({
+    ...quote,
+    total: quote.total.toString(),
+  }));
+
   return {
-    props: { feed },
+    props: { feed: feedWithTotalAsString },
   };
 };
 
