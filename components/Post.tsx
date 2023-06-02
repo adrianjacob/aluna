@@ -9,6 +9,12 @@ const cx = classNames.bind(styles);
 export type PostProps = {
   id: string;
   reference: string;
+  deliveryOption: string;
+  address1: string;
+  address2: string;
+  town: string;
+  county: string;
+  postcode: string;
   name: string;
   contact: string;
   email: string;
