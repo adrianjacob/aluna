@@ -5,6 +5,7 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 import Panel from "../components/Panel";
 
+import config from "../config/index.json";
 import Reference from "../config/Reference";
 import Name from "../config/Name";
 import DeliveryAddress from "../config/DeliveryAddress";

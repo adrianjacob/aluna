@@ -110,6 +110,8 @@ const Post: React.FC<PostProps> = (props) => {
                         })
                       : key === "total"
                       ? "£" + value
+                      : typeof value === "boolean"
+                      ? value.toString()
                       : value}
                   </Line.Value>
                 </Line>

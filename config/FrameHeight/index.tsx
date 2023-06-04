@@ -5,7 +5,7 @@ import Label from "../../components/Label";
 import Button from "../../components/Button";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  frameHeight: string;
+  frameHeight: number;
   setFrameHeight: React.Dispatch<React.SetStateAction<number>>;
   leaf: {
     min: number;

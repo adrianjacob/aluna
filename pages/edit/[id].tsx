@@ -1,11 +1,12 @@
 // pages/p/[id].tsx
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
 import Layout from "../../components/Layout";
 import Panel from "../../components/Panel";
 
+import config from "../../config/index.json";
 import Reference from "../../config/Reference";
 import Name from "../../config/Name";
 import DeliveryAddress from "../../config/DeliveryAddress";
@@ -36,6 +37,12 @@ import TrackColor from "../../config/TrackColor";
 import TrickleVents from "../../config/TrickleVents";
 import DeliveryType from "../../config/DeliveryType";
 import Notes from "../../config/Notes";
+
+import Field from "../../components/Field";
+import Label from "../../components/Label";
+import Button from "../../components/Button";
+import Banner from "../../components/Banner";
+import Preview from "../../components/Preview";
 
 import { PostProps } from "../../components/Post";
 import { useSession } from "next-auth/react";
@@ -76,6 +83,54 @@ const Post: React.FC<PostProps> = (props) => {
   const [postcode, setPostcode] = useState(props.postcode);
   const [contact, setContact] = useState(props.contact);
   const [email, setEmail] = useState(props.email);
+  const [frameWidth, setFrameWidth] = useState(props.frameWidth);
+  const [frameHeight, setFrameHeight] = useState(props.frameHeight);
+  const [threshold, setThreshold] = useState(props.threshold);
+  const [cill, setCill] = useState(props.cill);
+  const [cillCost, setCillCost] = useState(config.cill[props.cill]);
+  const [leftDoors, setLeftDoors] = useState(props.leftDoors);
+  const [rightDoors, setRightDoors] = useState(props.rightDoors);
+  const [openingDirection, setOpeningDirection] = useState(
+    props.openingDirection
+  );
+  const [trafficDoorSide, setTrafficDoorSIde] = useState(props.trafficDoorSide);
+  const [frameColor, setFrameColor] = useState(props.frameColor);
+  const [frameColorCost, setFrameColorCost] = useState(0);
+  const [addOnSize, setAddOnSize] = useState(props.addOnSize);
+  const [addOnSizeCost, setAddOnSizeCost] = useState(
+    config.addOnSize[props.addOnSize]
+  );
+  const [addOnPositionTop, setAddOnPositionTop] = useState(
+    props.addOnPositionTop
+  );
+  const [addOnPositionLeft, setAddOnPositionLeft] = useState(
+    props.addOnPositionLeft
+  );
+  const [addOnPositionRight, setAddOnPositionRight] = useState(
+    props.addOnPositionRight
+  );
+  const [handleColor, setHandleColor] = useState(props.handleColor);
+  const [handleColorCost, setHandleColorCost] = useState(0);
+  const [internalShootbolt, setInternalShootbolt] = useState(
+    props.internalShootbolt
+  );
+  const [internalShootboltCost, setInternalShootboltCost] = useState(0);
+  const [glazing, setGlazing] = useState(props.glazing);
+  const [glazingCost, setGlazingCost] = useState(0);
+  const [blinds, setBlinds] = useState(props.blinds);
+  const [blindsCost, setBlindsCost] = useState(0);
+  const [blindsColor, setBlindsColor] = useState(props.blindsColor);
+  const [blindsTrack, setBlindsTrack] = useState(props.blindsTrack);
+  const [trickleVents, setTrickleVents] = useState(props.trickleVents);
+  const [trickleVentsCost, setTrickleVentsCost] = useState(0);
+  const [delivery, setDelivery] = useState(props.delivery);
+  const [deliveryCost, setDeliveryCost] = useState(0);
+  const [content, setContent] = useState(props.content);
+
+  const leaf = {
+    min: 550,
+    max: 1200,
+  };
 
   const { data: session, status } = useSession();
   if (status === "loading") {
@@ -103,10 +158,82 @@ const Post: React.FC<PostProps> = (props) => {
         postcode,
         contact,
         email,
+        frameWidth,
+        frameHeight,
+        threshold,
+        cill,
+        leftDoors,
+        rightDoors,
+        openingDirection,
+        trafficDoorSide,
+        frameColor,
+        addOnSize,
+        addOnPositionTop,
+        addOnPositionLeft,
+        addOnPositionRight,
+        handleColor,
+        internalShootbolt,
+        glazing,
+        blinds,
+        blindsColor,
+        blindsTrack,
+        trickleVents,
+        delivery,
+        content,
+        total,
       }),
     });
     await Router.push("/");
   }
+
+  // MAKE KIT FORM DEFAULT IF LARGER DIMENSIONS
+  useEffect(() => {
+    if (frameWidth > 4800 || frameHeight > 2200) {
+      setDelivery("Kit form");
+      setDeliveryCost(7500);
+    }
+  }, [frameWidth, frameHeight]);
+
+  // SET TOTAL
+  useEffect(() => {
+    const sumCill = (frameWidth / 1000) * (cillCost / 100);
+    const doorsPerLeaf = frameHeight < 2250 ? 395 : 425;
+    const sumDoors = doorsPerLeaf * (leftDoors + rightDoors);
+    const sumFrameColor = (frameColorCost / 100) * (leftDoors + rightDoors);
+    // const sumAddOnSize = (frameWidth / 1000) * (addOnSizeCost / 100);
+    const sumAddOnSize = 0;
+    const sumAddOnPositionTop = addOnPositionTop
+      ? (addOnSizeCost / 100) * (frameWidth / 1000)
+      : 0;
+    const sumAddOnPositionLeft = addOnPositionLeft
+      ? (addOnSizeCost / 100) * (frameHeight / 1000)
+      : 0;
+    const sumAddOnPositionRight = addOnPositionRight
+      ? (addOnSizeCost / 100) * (frameHeight / 1000)
+      : 0;
+    const sumHandleColour = handleColorCost / 100;
+    const sumInternalShootbolt = internalShootboltCost / 100;
+    const sumTrickleVents = trickleVentsCost / 100;
+    const sumGlazing =
+      ((frameWidth * frameHeight) / 1000000) * (glazingCost / 100);
+    const sumBlinds = (leftDoors + rightDoors) * (blindsCost / 100);
+    const sumDelivery = deliveryCost / 100;
+    setTotal(
+      sumCill +
+        sumDoors +
+        sumFrameColor +
+        sumAddOnSize +
+        sumAddOnPositionTop +
+        sumAddOnPositionLeft +
+        sumAddOnPositionRight +
+        sumHandleColour +
+        sumInternalShootbolt +
+        sumTrickleVents +
+        sumGlazing +
+        sumBlinds +
+        sumDelivery
+    );
+  });
 
   return (
     <Layout title="Edit quote">
@@ -125,12 +252,146 @@ const Post: React.FC<PostProps> = (props) => {
         )}
         <ContactNumber {...{ contact, setContact }} />
         <Email {...{ email, setEmail }} />
-
-        {userHasValidSession && postBelongsToUser && (
-          <button onClick={() => savePost(props.id)}>Save</button>
+        <FrameWidth {...{ frameWidth, setFrameWidth, leaf }} />
+        <FrameHeight {...{ frameHeight, setFrameHeight, leaf }} />
+        <Threshold {...{ threshold, setThreshold }} />
+        <Cill {...{ cill, setCill, setCillCost }} />
+        <DoorsLeft
+          {...{
+            leftDoors,
+            setLeftDoors,
+            rightDoors,
+            setRightDoors,
+            frameWidth,
+            leaf,
+          }}
+        />
+        <DoorsRight
+          {...{
+            rightDoors,
+            setRightDoors,
+            leftDoors,
+            setLeftDoors,
+            frameWidth,
+            leaf,
+          }}
+        />
+        <OpeningDirection {...{ openingDirection, setOpeningDirection }} />
+        <TrafficDoorSide {...{ trafficDoorSide, setTrafficDoorSIde }} />
+        <FrameColor {...{ frameColor, setFrameColor, setFrameColorCost }} />
+        <AddOnSize
+          {...{
+            addOnSize,
+            setAddOnSize,
+            setAddOnSizeCost,
+            setAddOnPositionTop,
+            setAddOnPositionRight,
+            setAddOnPositionLeft,
+          }}
+        />
+        {addOnSize !== "None" && (
+          <AddOnPosition
+            {...{
+              addOnPositionTop,
+              setAddOnPositionTop,
+              addOnPositionLeft,
+              setAddOnPositionLeft,
+              addOnPositionRight,
+              setAddOnPositionRight,
+            }}
+          />
         )}
+        <HandleColor
+          {...{
+            handleColor,
+            setHandleColor,
+            setHandleColorCost,
+            frameColor,
+          }}
+        />
+        <InternalShootbolt
+          {...{
+            internalShootbolt,
+            setInternalShootbolt,
+            setInternalShootboltCost,
+            handleColor,
+            frameColor,
+          }}
+        />
+        <Glazing
+          {...{
+            glazing,
+            setGlazing,
+            setGlazingCost,
+            setBlinds,
+            setBlindsCost,
+          }}
+        />
+        <Blinds
+          {...{
+            blinds,
+            setBlinds,
+            setBlindsCost,
+            glazing,
+            setBlindsColor,
+            setBlindsTrack,
+          }}
+        />
+        {blinds === "Integrated Blinds 1.2 U-value" && (
+          <>
+            <BlindsColor {...{ blindsColor, setBlindsColor, setBlindsTrack }} />
+            <TrackColor {...{ blindsTrack, setBlindsTrack }} />
+          </>
+        )}
+        <TrickleVents
+          {...{ trickleVents, setTrickleVents, setTrickleVentsCost }}
+        />
+        <DeliveryType
+          {...{
+            delivery,
+            setDelivery,
+            setDeliveryCost,
+            frameWidth,
+            frameHeight,
+          }}
+        />
+        <Notes {...{ content, setContent }} />
+        <Field>
+          <Label>Preview</Label>
+          <Preview
+            leftDoors={leftDoors}
+            rightDoors={rightDoors}
+            frameColor={frameColor}
+          />
+        </Field>
+
+        <Banner>
+          <Banner.Left>
+            {/* <Button
+              type="submit"
+              variant="secondary"
+              name="save"
+              onClick={submitData}
+            >
+              Save
+            </Button> */}
+          </Banner.Left>
+          <Banner.Right>
+            <div>
+              £
+              {total.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+              <br />
+              <small>(ex. VAT)</small>
+            </div>
+            {userHasValidSession && postBelongsToUser && (
+              <button onClick={() => savePost(props.id)}>Save</button>
+            )}
+          </Banner.Right>
+        </Banner>
       </Panel>
-      <style jsx>{``}</style>
     </Layout>
   );
 };

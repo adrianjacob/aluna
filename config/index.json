@@ -1,0 +1,14 @@
+{
+  "addOnSize": {
+    "None": 0,
+    "20mm add-on": 1650,
+    "38mm add-on": 1850
+  },
+  "cill": {
+    "Standard (150mm)": 1800,
+    "None": 0,
+    "90mm": 1650,
+    "190mm": 2100,
+    "230mm": 2500
+  }
+}

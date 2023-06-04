@@ -2,6 +2,7 @@ import React from "react";
 import Option from "../../components/Option";
 import Field from "../../components/Field";
 import Label from "../../components/Label";
+import config from "../index.json";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   cill: string;
@@ -18,38 +19,17 @@ const Config: React.FC<Props> = ({ cill, setCill, setCillCost }) => {
     <Field>
       <Label>Cill*</Label>
       <Field.Options>
-        <Option
-          isActive={cill === "Standard (150mm)"}
-          onClick={() => handleCillSelect("Standard (150mm)", 1800)}
-        >
-          Standard
-          <br />
-          (150mm)
-        </Option>
-        <Option
-          isActive={cill === "None"}
-          onClick={() => handleCillSelect("None", 0)}
-        >
-          None
-        </Option>
-        <Option
-          isActive={cill === "90mm"}
-          onClick={() => handleCillSelect("90mm", 1650)}
-        >
-          90mm
-        </Option>
-        <Option
-          isActive={cill === "190mm"}
-          onClick={() => handleCillSelect("190mm", 2100)}
-        >
-          190mm
-        </Option>
-        <Option
-          isActive={cill === "230mm"}
-          onClick={() => handleCillSelect("230mm", 2500)}
-        >
-          230mm
-        </Option>
+        {Object.keys(config.cill).map((key, index) => (
+          <Option
+            key={index}
+            isActive={cill === key}
+            onClick={() =>
+              handleCillSelect(key, Object.values(config.cill)[index])
+            }
+          >
+            {key}
+          </Option>
+        ))}
       </Field.Options>
     </Field>
   );

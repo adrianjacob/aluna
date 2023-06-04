@@ -18,23 +18,37 @@ export type PostProps = {
   name: string;
   contact: string;
   email: string;
-  frameWidth: string;
-  frameHeight: string;
+  frameWidth: number;
+  frameHeight: number;
   threshold: string;
   cill: string;
+  leftDoors: number;
+  rightDoors: number;
+  openingDirection: string;
+  trafficDoorSide: string;
+  frameColor: string;
+  addOnSize: string;
+  addOnPositionTop: boolean;
+  addOnPositionLeft: boolean;
+  addOnPositionRight: boolean;
+  handleColor: string;
+  internalShootbolt: string;
+  glazing: string;
+  blinds: string;
+  blindsColor: string;
+  blindsTrack: string;
+  trickleVents: string;
+  delivery: string;
+  content: string;
+  published: boolean;
   author: {
     name: string;
     email: string;
     image: string;
   } | null;
-  content: string;
-  published: boolean;
   datePublished: string;
   dateModified: string;
   total: string;
-  leftDoors: number;
-  rightDoors: number;
-  frameColor: string;
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
