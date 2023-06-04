@@ -2,6 +2,7 @@ import React from "react";
 import Option from "../../components/Option";
 import Field from "../../components/Field";
 import Label from "../../components/Label";
+import config from "../index.json";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   blinds: string;
@@ -29,25 +30,31 @@ const Config: React.FC<Props> = ({
       <Label>Blinds*</Label>
       <Field.Options>
         <Option
-          isActive={blinds === "N/a"}
+          isActive={blinds === Object.keys(config.blinds)[0]}
           onClick={() => {
-            handleBlinds("N/a", 0);
+            handleBlinds(
+              Object.keys(config.blinds)[0],
+              Object.values(config.blinds)[0]
+            );
             setBlindsColor("");
             setBlindsTrack("");
           }}
         >
-          N/a
+          {Object.keys(config.blinds)[0]}
         </Option>
         {glazing === "Clear Low E 1.2 U-value" && (
           <Option
-            isActive={blinds === "Integrated Blinds 1.2 U-value"}
+            isActive={blinds === Object.keys(config.blinds)[1]}
             onClick={() => {
-              handleBlinds("Integrated Blinds 1.2 U-value", 20000);
+              handleBlinds(
+                Object.keys(config.blinds)[1],
+                Object.values(config.blinds)[1]
+              );
               setBlindsColor("S102 White");
               setBlindsTrack("S102 White");
             }}
           >
-            Integrated Blinds 1.2 U-value
+            {Object.keys(config.blinds)[1]}
           </Option>
         )}
       </Field.Options>

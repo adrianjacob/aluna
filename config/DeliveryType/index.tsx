@@ -2,6 +2,7 @@ import React from "react";
 import Option from "../../components/Option";
 import Field from "../../components/Field";
 import Label from "../../components/Label";
+import config from "../index.json";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   delivery: string;
@@ -28,18 +29,27 @@ const Config: React.FC<Props> = ({
       <Field.Options>
         {frameWidth <= 4800 && frameHeight <= 2200 && (
           <Option
-            isActive={delivery === "Assembled"}
-            onClick={() => handleDelivery("Assembled", 0)}
+            isActive={delivery === Object.keys(config.delivery)[0]}
+            onClick={() =>
+              handleDelivery(
+                Object.keys(config.delivery)[0],
+                Object.values(config.delivery)[0]
+              )
+            }
           >
-            Assembled
+            {Object.keys(config.delivery)[0]}
           </Option>
         )}
-
         <Option
-          isActive={delivery === "Kit form"}
-          onClick={() => handleDelivery("Kit form", 7500)}
+          isActive={delivery === Object.keys(config.delivery)[1]}
+          onClick={() =>
+            handleDelivery(
+              Object.keys(config.delivery)[1],
+              Object.values(config.delivery)[1]
+            )
+          }
         >
-          Kit form
+          {Object.keys(config.delivery)[1]}
         </Option>
       </Field.Options>
     </Field>

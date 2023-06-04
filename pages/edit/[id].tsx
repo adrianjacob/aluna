@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const Post: React.FC<PostProps> = (props) => {
-  const [total, setTotal] = useState(props.total);
+  const [total, setTotal] = useState(Number(props.total));
   const [reference, setReference] = useState(props.reference);
   const [name, setName] = useState(props.name);
   const [deliveryOption, setDeliveryOption] = useState(props.deliveryOption);
@@ -95,7 +95,9 @@ const Post: React.FC<PostProps> = (props) => {
   );
   const [trafficDoorSide, setTrafficDoorSIde] = useState(props.trafficDoorSide);
   const [frameColor, setFrameColor] = useState(props.frameColor);
-  const [frameColorCost, setFrameColorCost] = useState(0);
+  const [frameColorCost, setFrameColorCost] = useState(
+    config.frameColor[props.frameColor]
+  );
   const [addOnSize, setAddOnSize] = useState(props.addOnSize);
   const [addOnSizeCost, setAddOnSizeCost] = useState(
     config.addOnSize[props.addOnSize]
@@ -110,21 +112,29 @@ const Post: React.FC<PostProps> = (props) => {
     props.addOnPositionRight
   );
   const [handleColor, setHandleColor] = useState(props.handleColor);
-  const [handleColorCost, setHandleColorCost] = useState(0);
+  const [handleColorCost, setHandleColorCost] = useState(
+    config.handleColor[props.handleColor]
+  );
   const [internalShootbolt, setInternalShootbolt] = useState(
     props.internalShootbolt
   );
-  const [internalShootboltCost, setInternalShootboltCost] = useState(0);
+  const [internalShootboltCost, setInternalShootboltCost] = useState(
+    config.internalShootbolt[props.internalShootbolt]
+  );
   const [glazing, setGlazing] = useState(props.glazing);
-  const [glazingCost, setGlazingCost] = useState(0);
+  const [glazingCost, setGlazingCost] = useState(config.glazing[props.glazing]);
   const [blinds, setBlinds] = useState(props.blinds);
-  const [blindsCost, setBlindsCost] = useState(0);
+  const [blindsCost, setBlindsCost] = useState(config.blinds[props.blinds]);
   const [blindsColor, setBlindsColor] = useState(props.blindsColor);
   const [blindsTrack, setBlindsTrack] = useState(props.blindsTrack);
   const [trickleVents, setTrickleVents] = useState(props.trickleVents);
-  const [trickleVentsCost, setTrickleVentsCost] = useState(0);
+  const [trickleVentsCost, setTrickleVentsCost] = useState(
+    config.trickleVents[props.trickleVents]
+  );
   const [delivery, setDelivery] = useState(props.delivery);
-  const [deliveryCost, setDeliveryCost] = useState(0);
+  const [deliveryCost, setDeliveryCost] = useState(
+    config.delivery[props.delivery]
+  );
   const [content, setContent] = useState(props.content);
 
   const leaf = {
@@ -379,7 +389,7 @@ const Post: React.FC<PostProps> = (props) => {
           <Banner.Right>
             <div>
               £
-              {total.toLocaleString(undefined, {
+              {Number(total).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
@@ -387,7 +397,7 @@ const Post: React.FC<PostProps> = (props) => {
               <small>(ex. VAT)</small>
             </div>
             {userHasValidSession && postBelongsToUser && (
-              <button onClick={() => savePost(props.id)}>Save</button>
+              <Button onClick={() => savePost(props.id)}>Save</Button>
             )}
           </Banner.Right>
         </Banner>

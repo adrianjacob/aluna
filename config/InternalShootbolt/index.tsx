@@ -2,6 +2,7 @@ import React from "react";
 import Option from "../../components/Option";
 import Field from "../../components/Field";
 import Label from "../../components/Label";
+import config from "../index.json";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   internalShootbolt: string;
@@ -27,38 +28,62 @@ const Config: React.FC<Props> = ({
       <Label>Internal shootbolt handle colour*</Label>
       <Field.Options>
         <Option
-          isActive={internalShootbolt === "Standard to match door colour"}
+          isActive={
+            internalShootbolt === Object.keys(config.internalShootbolt)[0]
+          }
           onClick={() =>
-            handleInternalShootbolt("Standard to match door colour", 0)
+            handleInternalShootbolt(
+              Object.keys(config.internalShootbolt)[0],
+              Object.values(config.internalShootbolt)[0]
+            )
           }
         >
-          Standard to match door colour
+          {Object.keys(config.internalShootbolt)[0]}
         </Option>
-        {handleColor !== "Black" && (
+        {handleColor !== Object.keys(config.handleColor)[1] && (
           <Option
-            isActive={internalShootbolt === "Black"}
-            onClick={() => handleInternalShootbolt("Black", 0)}
+            isActive={
+              internalShootbolt === Object.keys(config.internalShootbolt)[1]
+            }
+            onClick={() =>
+              handleInternalShootbolt(
+                Object.keys(config.internalShootbolt)[1],
+                Object.values(config.internalShootbolt)[1]
+              )
+            }
           >
-            Black
+            {Object.keys(config.internalShootbolt)[1]}
           </Option>
         )}
 
-        {(frameColor === "Single RAL Internal & External" ||
-          frameColor === "Dual RAL Internal & External") && (
+        {(frameColor === Object.keys(config.frameColor)[5] ||
+          frameColor === Object.keys(config.frameColor)[6]) && (
           <>
             <Option
-              isActive={internalShootbolt === "Chrome"}
-              onClick={() => handleInternalShootbolt("Chrome", 1000)}
-            >
-              Chrome
-            </Option>
-            <Option
-              isActive={internalShootbolt === "Satin Brushed Aluminium"}
+              isActive={
+                internalShootbolt === Object.keys(config.internalShootbolt)[2]
+              }
               onClick={() =>
-                handleInternalShootbolt("Satin Brushed Aluminium", 1000)
+                handleInternalShootbolt(
+                  Object.keys(config.internalShootbolt)[2],
+                  Object.values(config.internalShootbolt)[2]
+                )
               }
             >
-              Satin Brushed Aluminium
+              {Object.keys(config.internalShootbolt)[2]}
+            </Option>
+            <Option
+              isActive={
+                internalShootbolt === Object.keys(config.internalShootbolt)[3]
+              }
+              onClick={() =>
+                handleInternalShootbolt(
+                  Object.keys(config.internalShootbolt)[3],
+                  Object.values(config.internalShootbolt)[3]
+                )
+              }
+            >
+              {Object.keys(config.internalShootbolt)[3]}
             </Option>
           </>
         )}

@@ -2,6 +2,7 @@ import React from "react";
 import Option from "../../components/Option";
 import Field from "../../components/Field";
 import Label from "../../components/Label";
+import config from "../index.json";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   addOnPositionTop: boolean;
@@ -28,19 +29,19 @@ const Config: React.FC<Props> = ({
           isActive={addOnPositionTop}
           onClick={() => setAddOnPositionTop(!addOnPositionTop)}
         >
-          Top
+          {Object.keys(config.addOnPositionTop)}
         </Option>
         <Option
           isActive={addOnPositionRight}
           onClick={() => setAddOnPositionRight(!addOnPositionRight)}
         >
-          Right
+          {Object.keys(config.addOnPositionRight)}
         </Option>
         <Option
           isActive={addOnPositionLeft}
           onClick={() => setAddOnPositionLeft(!addOnPositionLeft)}
         >
-          Left
+          {Object.keys(config.addOnPositionLeft)}
         </Option>
       </Field.Options>
     </Field>

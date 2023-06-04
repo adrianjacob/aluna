@@ -2,6 +2,7 @@ import React from "react";
 import Option from "../../components/Option";
 import Field from "../../components/Field";
 import Label from "../../components/Label";
+import config from "../index.json";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   glazing: string;
@@ -31,52 +32,75 @@ const Config: React.FC<Props> = ({
       <Label>Glazing*</Label>
       <Field.Options>
         <Option
-          isActive={glazing === "Unglazed"}
-          onClick={() => {
-            handleGlazing("Unglazed", 0);
-            handleBlinds("N/a", 0);
-          }}
-        >
-          Unglazed
-        </Option>
-        <Option
-          isActive={glazing === "Clear Low E 1.2 U-value"}
-          onClick={() => handleGlazing("Clear Low E 1.2 U-value", 4900)}
-        >
-          Clear Low E 1.2 U-value
-        </Option>
-        <Option
-          isActive={glazing === "Clear Ultra Low E 1.1 U-value"}
-          onClick={() => {
-            handleGlazing("Clear Ultra Low E 1.1 U-value", 5600);
-            handleBlinds("N/a", 0);
-          }}
-        >
-          Clear Ultra Low E 1.1 U-value
-        </Option>
-        <Option
-          isActive={
-            glazing ===
-            "Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm Unit"
-          }
+          isActive={glazing === Object.keys(config.glazing)[0]}
           onClick={() => {
             handleGlazing(
-              "Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm Unit",
-              8100
+              Object.keys(config.glazing)[0],
+              Object.values(config.glazing)[0]
             );
-            handleBlinds("N/a", 0);
+            handleBlinds(
+              Object.keys(config.blinds)[0],
+              Object.values(config.blinds)[0]
+            );
           }}
         >
-          Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm Unit
+          {Object.keys(config.glazing)[0]}
         </Option>
         <Option
-          isActive={glazing === "Other"}
+          isActive={glazing === Object.keys(config.glazing)[1]}
+          onClick={() =>
+            handleGlazing(
+              Object.keys(config.glazing)[1],
+              Object.values(config.glazing)[1]
+            )
+          }
+        >
+          {Object.keys(config.glazing)[1]}
+        </Option>
+        <Option
+          isActive={glazing === Object.keys(config.glazing)[2]}
           onClick={() => {
-            handleGlazing("Other", 0);
-            handleBlinds("N/a", 0);
+            handleGlazing(
+              Object.keys(config.glazing)[2],
+              Object.values(config.glazing)[2]
+            );
+            handleBlinds(
+              Object.keys(config.blinds)[0],
+              Object.values(config.blinds)[0]
+            );
           }}
         >
-          Other (POA)
+          {Object.keys(config.glazing)[2]}
+        </Option>
+        <Option
+          isActive={glazing === Object.keys(config.glazing)[3]}
+          onClick={() => {
+            handleGlazing(
+              Object.keys(config.glazing)[3],
+              Object.values(config.glazing)[3]
+            );
+            handleBlinds(
+              Object.keys(config.blinds)[0],
+              Object.values(config.blinds)[0]
+            );
+          }}
+        >
+          {Object.keys(config.glazing)[3]}
+        </Option>
+        <Option
+          isActive={glazing === Object.keys(config.glazing)[4]}
+          onClick={() => {
+            handleGlazing(
+              Object.keys(config.glazing)[4],
+              Object.values(config.glazing)[4]
+            );
+            handleBlinds(
+              Object.keys(config.blinds)[0],
+              Object.values(config.blinds)[0]
+            );
+          }}
+        >
+          {Object.keys(config.glazing)[4]}
         </Option>
       </Field.Options>
     </Field>

@@ -3,6 +3,7 @@ import Router from "next/router";
 import Badge from "./Badge";
 import classNames from "classnames/bind";
 import styles from "./Post.module.scss";
+import { Decimal } from "@prisma/client/runtime";
 
 const cx = classNames.bind(styles);
 
@@ -48,12 +49,10 @@ export type PostProps = {
   } | null;
   datePublished: string;
   dateModified: string;
-  total: string;
+  total: Decimal | null;
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
-  const authorName = post.author ? post.author.name : "Unknown author";
-  console.log(post);
   return (
     <div
       className={cx("post")}
@@ -83,7 +82,11 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
               month: "short",
               day: "numeric",
             })}{" "}
-            - £{post.total}
+            - £
+            {Number(post.total).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </div>
         </div>
       </div>

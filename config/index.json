@@ -1,8 +1,34 @@
 {
+  "addOnPositionTop": {
+    "Top": true
+  },
+  "addOnPositionRight": {
+    "Right": true
+  },
+  "addOnPositionLeft": {
+    "Left": true
+  },
   "addOnSize": {
     "None": 0,
     "20mm add-on": 1650,
     "38mm add-on": 1850
+  },
+  "blinds": {
+    "N/a": 0,
+    "Integrated Blinds 1.2 U-value": 20000
+  },
+  "blindsColor": {
+    "S102 White": null,
+    "S106 Yellow": null,
+    "S125 Beige": null,
+    "S130 Green": null,
+    "S142 Light Blue": null,
+    "S149 Cream": null,
+    "S155 Grey": null,
+    "S156 Metallic Grey": null,
+    "S157 Silver": null,
+    "S159 Anthracite": null,
+    "S160 Black": null
   },
   "cill": {
     "Standard (150mm)": 1800,
@@ -10,5 +36,45 @@
     "90mm": 1650,
     "190mm": 2100,
     "230mm": 2500
+  },
+  "delivery": {
+    "Assembled": 0,
+    "Kit form": 7500
+  },
+  "frameColor": {
+    "White (RAL 9016 Gloss)": 0,
+    "Black (RAL 9005 Matt)": 0,
+    "Anthracite (RAL 7016 Matt)": 0,
+    "Anthracite external (RAL 7016 Matt) / White internal (RAL 9016 Gloss)": 0,
+    "Black external (RAL 9005 Matt) / White internal (RAL 9016 Gloss)": 0,
+    "Single RAL Internal & External": 17500,
+    "Dual RAL Internal & External": 22500
+  },
+  "glazing": {
+    "Unglazed": 0,
+    "Clear Low E 1.2 U-value": 4900,
+    "Clear Ultra Low E 1.1 U-value": 5600,
+    "Clear Ultra Low E 1.1 U-value PAS-24 6.8mm Laminated 4mm Unit": 8100,
+    "Other (POA)": 0
+  },
+  "handleColor": {
+    "White": 0,
+    "Black": 0,
+    "Anthracite": 0,
+    "Chrome": 1000,
+    "Satin Brushed Aluminium": 1000,
+    "Dual-Colour to match": 2000
+  },
+  "internalShootbolt": {
+    "Standard to match door colour": 0,
+    "Black": 0,
+    "Chrome": 1000,
+    "Satin Brushed Aluminium": 1000
+  },
+  "trickleVents": {
+    "N/a": 0,
+    "1": 3750,
+    "2": 7500,
+    "3": 11250
   }
 }

@@ -58,7 +58,6 @@ async function editPost(id: string): Promise<void> {
 }
 
 const Post: React.FC<PostProps> = (props) => {
-  console.log(props.leftDoors);
   const { data: session, status } = useSession();
   if (status === "loading") {
     return <div>Authenticating ...</div>;
@@ -109,7 +108,11 @@ const Post: React.FC<PostProps> = (props) => {
                           day: "numeric",
                         })
                       : key === "total"
-                      ? "£" + value
+                      ? "£" +
+                        Number(value).toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
                       : typeof value === "boolean"
                       ? value.toString()
                       : value}

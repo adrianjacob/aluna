@@ -2,6 +2,7 @@ import React from "react";
 import Option from "../../components/Option";
 import Field from "../../components/Field";
 import Label from "../../components/Label";
+import config from "../index.json";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   blindsColor: string;
@@ -19,113 +20,113 @@ const Config: React.FC<Props> = ({
       <Label>Blinds colour*</Label>
       <Field.Options>
         <Option
-          isActive={blindsColor === "S102 White"}
+          isActive={blindsColor === Object.keys(config.blindsColor)[0]}
           onClick={() => {
-            setBlindsColor("S102 White");
-            setBlindsTrack("S102 White");
+            setBlindsColor(Object.keys(config.blindsColor)[0]);
+            setBlindsTrack(Object.keys(config.blindsColor)[0]);
           }}
         >
-          S102 White
+          {Object.keys(config.blindsColor)[0]}
         </Option>
         <Option
-          isActive={blindsColor === "S106 Yellow"}
+          isActive={blindsColor === Object.keys(config.blindsColor)[1]}
           onClick={() => {
-            setBlindsColor("S106 Yellow");
-            setBlindsTrack("S157 Silver");
+            setBlindsColor(Object.keys(config.blindsColor)[1]);
+            setBlindsTrack(Object.keys(config.blindsColor)[9]);
           }}
           style={{ background: "#f9e7a7" }}
         >
-          S106 Yellow
+          {Object.keys(config.blindsColor)[1]}
         </Option>
         <Option
           isActive={blindsColor === "S125 Beige"}
           onClick={() => {
-            setBlindsColor("S125 Beige");
-            setBlindsTrack("S149 Cream");
+            setBlindsColor(Object.keys(config.blindsColor)[2]);
+            setBlindsTrack(Object.keys(config.blindsColor)[6]);
           }}
           style={{ background: "#efdcd1" }}
         >
-          S125 Beige
+          {Object.keys(config.blindsColor)[2]}
         </Option>
         <Option
           isActive={blindsColor === "S130 Green"}
           onClick={() => {
-            setBlindsColor("S130 Green");
-            setBlindsTrack("S157 Silver");
+            setBlindsColor(Object.keys(config.blindsColor)[3]);
+            setBlindsTrack(Object.keys(config.blindsColor)[8]);
           }}
           style={{ background: "#c9dfd2" }}
         >
-          S130 Green
+          {Object.keys(config.blindsColor)[3]}
         </Option>
         <Option
           isActive={blindsColor === "S142 Light Blue"}
           onClick={() => {
-            setBlindsColor("S142 Light Blue");
-            setBlindsTrack("S157 Silver");
+            setBlindsColor(Object.keys(config.blindsColor)[4]);
+            setBlindsTrack(Object.keys(config.blindsColor)[8]);
           }}
           style={{ background: "#d5edf7" }}
         >
-          S142 Light Blue
+          {Object.keys(config.blindsColor)[4]}
         </Option>
         <Option
           isActive={blindsColor === "S149 Cream"}
           onClick={() => {
-            setBlindsColor("S149 Cream");
-            setBlindsTrack("S149 Cream");
+            setBlindsColor(Object.keys(config.blindsColor)[5]);
+            setBlindsTrack(Object.keys(config.blindsColor)[5]);
           }}
           style={{ background: "#f9f0e5" }}
         >
-          S149 Cream
+          {Object.keys(config.blindsColor)[5]}
         </Option>
         <Option
           isActive={blindsColor === "S155 Grey"}
           onClick={() => {
-            setBlindsColor("S155 Grey");
-            setBlindsTrack("S157 Silver");
+            setBlindsColor(Object.keys(config.blindsColor)[6]);
+            setBlindsTrack(Object.keys(config.blindsColor)[8]);
           }}
           style={{ background: "#ebebeb" }}
         >
-          S155 Grey
+          {Object.keys(config.blindsColor)[6]}
         </Option>
         <Option
           isActive={blindsColor === "S156 Metallic Grey"}
           onClick={() => {
-            setBlindsColor("S156 Metallic Grey");
-            setBlindsTrack("S157 Silver");
+            setBlindsColor(Object.keys(config.blindsColor)[7]);
+            setBlindsTrack(Object.keys(config.blindsColor)[8]);
           }}
           style={{ background: "#bdbdbd" }}
         >
-          S156 Metallic Grey
+          {Object.keys(config.blindsColor)[7]}
         </Option>
         <Option
           isActive={blindsColor === "S157 Silver"}
           onClick={() => {
-            setBlindsColor("S157 Silver");
-            setBlindsTrack("S157 Silver");
+            setBlindsColor(Object.keys(config.blindsColor)[8]);
+            setBlindsTrack(Object.keys(config.blindsColor)[8]);
           }}
           style={{ background: "#e0e0e0" }}
         >
-          S157 Silver
+          {Object.keys(config.blindsColor)[8]}
         </Option>
         <Option
           isActive={blindsColor === "S159 Anthracite"}
           onClick={() => {
-            setBlindsColor("S159 Anthracite");
-            setBlindsTrack("S159 Anthracite");
+            setBlindsColor(Object.keys(config.blindsColor)[9]);
+            setBlindsTrack(Object.keys(config.blindsColor)[9]);
           }}
           style={{ background: "#676767", color: "#FFF" }}
         >
-          S159 Anthracite
+          {Object.keys(config.blindsColor)[9]}
         </Option>
         <Option
           isActive={blindsColor === "S160 Black"}
           onClick={() => {
-            setBlindsColor("S160 Black");
-            setBlindsTrack("S160 Black");
+            setBlindsColor(Object.keys(config.blindsColor)[10]);
+            setBlindsTrack(Object.keys(config.blindsColor)[10]);
           }}
           style={{ background: "#0a0a0a", color: "#FFF" }}
         >
-          S160 Black
+          {Object.keys(config.blindsColor)[10]}
         </Option>
       </Field.Options>
     </Field>
