@@ -16,6 +16,9 @@ import { PostProps } from "../../components/Post";
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await prisma.quote.findUnique({
     where: {
@@ -68,6 +71,36 @@ const Post: React.FC<PostProps> = (props) => {
   // if (!props.published) {
   //   title = `${title} (Draft)`;
   // }
+
+  const downloadPDF = (title) => {
+    const banner = document.getElementById("banner");
+    if (banner) {
+      banner.style.display = "none";
+    }
+
+    const input = document.documentElement;
+    window.scrollTo(0, 0);
+    html2canvas(input, { scale: 1 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgWidth = 210; // A4 page width in mm
+      const pageHeight = 297; // A4 page height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      if (imgHeight > pageHeight) {
+        const ratio = pageHeight / imgHeight;
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth * ratio, pageHeight);
+      } else {
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      }
+
+      pdf.save(`${title}.pdf`);
+
+      if (banner) {
+        banner.style.display = "";
+      }
+    });
+  };
 
   return (
     <Layout title={title}>
@@ -165,11 +198,14 @@ const Post: React.FC<PostProps> = (props) => {
               </Button>
             )}
             {props.published && userHasValidSession && (
-              <div>
-                <small>To edit or cancel order</small>
-                <br />
-                <a href="tel:01924929600">01924929600</a>
-              </div>
+              <>
+                <div>
+                  <small>To edit or cancel order</small>
+                  <br />
+                  <a href="tel:01924929600">01924929600</a>
+                </div>
+                <Button onClick={() => downloadPDF(title)}>Download PDF</Button>
+              </>
             )}
           </Banner.Right>
         </Banner>

@@ -20,7 +20,11 @@ const Banner: React.FC<FieldProps> & {
   Left: React.FC<BannerLeftProps>;
   Right: React.FC<BannerRightProps>;
 } = ({ children }) => {
-  return <div className={cx("banner")}>{children}</div>;
+  return (
+    <div id="banner" className={cx("banner")}>
+      {children}
+    </div>
+  );
 };
 
 const BannerLeft: React.FC<BannerLeftProps> = ({ children }) => {
